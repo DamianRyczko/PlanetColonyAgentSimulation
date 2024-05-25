@@ -5,7 +5,9 @@ public class Main {
 
         var eventRandomizer = new EventRandomizer(0.05);
         var eventSimulator = new EventSimulator(eventRandomizer);
-        var colonyResources = new ColonyResources(400, 400, 500, 300);
+        var colonyResources = new ColonyResources(380, 400, 400, 400);
+
+        var buildingPlacer = new BuildingPlacer();
 
         ArrayList<WaterPurifier> waterPurifiers = new ArrayList<>();
         ArrayList<Farm>  farms= new ArrayList<>();
@@ -13,19 +15,41 @@ public class Main {
         ArrayList<FusionReactor> fusionReactors = new ArrayList<>();
         ArrayList<SolarPanel> solarPanels = new ArrayList<>();
 
-        waterPurifiers.add(new WaterPurifier(1,1));
-        farms.add(new Farm(1,2));
-        oxygenGenerators.add(new OxygenGenerator(1,3));
-        fusionReactors.add(new FusionReactor(1,4));
-        solarPanels.add(new SolarPanel(1,5));
+        //        waterPurifiers.add(new WaterPurifier(1,1));
+//        farms.add(new Farm(1,2));
+//        oxygenGenerators.add(new OxygenGenerator(1,3));
+//        fusionReactors.add(new FusionReactor(1,4));
+//        solarPanels.add(new SolarPanel(1,5));
+// this is just for test
+        String[][] grid = {
+                {"empty", "water", "empty", "empty", "food", "empty", "empty", "oxygen", "empty", "electricity"},
+                {"empty", "empty", "empty", "empty", "empty", "empty", "water", "empty", "empty", "empty"},
+                {"electricity", "empty", "empty", "empty", "empty", "oxygen", "empty", "empty", "empty", "empty"},
+                {"empty", "food", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "water"},
+                {"empty", "empty", "empty", "empty", "empty", "empty", "electricity", "empty", "empty", "empty"},
+                {"empty", "empty", "oxygen", "empty", "empty", "food", "empty", "empty", "empty", "empty"},
+                {"empty", "empty", "empty", "empty", "empty", "empty", "empty", "water", "empty", "empty"},
+                {"empty", "empty", "empty", "electricity", "empty", "empty", "empty", "empty", "empty", "food"},
+                {"empty", "empty", "empty", "empty", "oxygen", "empty", "empty", "empty", "empty", "empty"},
+                {"food", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "electricity", "empty"}
+        };
 
-        int days = 10;
-        //to taki tescik
+
+        int startX = 0;
+        int startY = 0;
+        int numberOfEngineers = 10;
+
+        buildingPlacer.addBuildings(solarPanels, farms, waterPurifiers, oxygenGenerators, numberOfEngineers, colonyResources, startX, startY, grid);
+
+        int days = 100;
+        //this is just for test
         while(days >= 0){
 
             //generates events
             eventSimulator.generateEvent(solarPanels, farms, fusionReactors, waterPurifiers, oxygenGenerators);
 
+            //adds buildings
+            buildingPlacer.addBuildings(solarPanels, farms, waterPurifiers, oxygenGenerators, numberOfEngineers, colonyResources, startX, startY, grid);
             //cycles all buildings
             System.out.println("====================Water purifiers=======================");
             for (WaterPurifier waterPurifier : waterPurifiers) {
