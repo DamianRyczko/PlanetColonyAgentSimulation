@@ -46,13 +46,14 @@ public class Main {
         chanceOftypes.add(25);
 
 
+
         int gridSizex = 30;
         int gridSizey = 30;
         int chanceOfRich = 20;
         AMap map = new AMap(gridSizex, gridSizey, chanceOfRich);
         map.setMap(chanceOftypes);
 
-        Position wynik = FindPath.BFS(new Position(0,0), new Position(5, 5), new Position(20, 20), 3);
+        Position wynik = FindPath.BFS(new Position(0,0), new Position(5, 5), new Position(20, 20), 7);
         System.out.println("wynik = "+wynik.toString());
 
         int startX = 0;

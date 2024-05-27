@@ -15,16 +15,16 @@ public class AMap {
         grid = new Field[gridSizeX][gridSizeY];
     }
 
-    public void setMap(ArrayList<Integer> chanceOftypes){
+    public void setMap(ArrayList<Integer> chanceOfTypes){
         for (int x = 0; x < gridSizeX; x++) {
             for (int y = 0; y < gridSizeY; y++) {
                 Random rand = new Random();;
-                int chanceSum = chanceOftypes.get(0);
+                int chanceSum = chanceOfTypes.get(0);
                 int randomNum = rand.nextInt(100);
                 int i = 0;
                 while (randomNum > chanceSum) {
                     i++;
-                    chanceSum += chanceOftypes.get(i);
+                    chanceSum += chanceOfTypes.get(i);
                 }
                 System.out.println(i);
                 grid[x][y] = new Field(i ,chanceOfRich);

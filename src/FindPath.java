@@ -26,12 +26,15 @@ public class FindPath {
         visited.add(start);
         while (!queue.isEmpty()) {
             Node current = queue.remove();
+            //System.out.println(current.position+" bfs");
             if (current.position.equals(end)) {
                 int steps = current.steps;
                 Position newPosition = current.position;
+                //System.out.println(steps+" steps "+numberOfSteps+" end");
                 while (steps > numberOfSteps) {
+                    //System.out.println("Steps "+steps+" steps "+numberOfSteps+" end "+ newPosition+" pos");
                     steps --;
-                    newPosition = previous.get(current.position);
+                    newPosition = previous.get(newPosition);
                 }
                 return newPosition;
             }
