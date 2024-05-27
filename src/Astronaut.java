@@ -9,6 +9,7 @@ abstract class Astronaut {
     private int x;
     private int y;
     private boolean alive;
+    private int dailyDistance;
 
 
     public int getId() {
@@ -43,6 +44,12 @@ abstract class Astronaut {
         return alive;
     }
 
+    public int getDailyDistance() {
+        return dailyDistance;
+    }
+
+
+
     public void setId(int id) {
         this.id = id;
     }
@@ -67,6 +74,10 @@ abstract class Astronaut {
 
     public void setRemainingFood(int remainingFood) {
         this.remainingFood = remainingFood;
+    }
+
+    public void setDailyDistance(int dailyDistance) {
+        this.dailyDistance = dailyDistance;
     }
 
     public void kill() {
