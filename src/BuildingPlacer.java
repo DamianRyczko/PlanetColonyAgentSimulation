@@ -7,9 +7,7 @@ public class BuildingPlacer {
     private String mostNeededResource;
     private boolean currentlyBuilding;
     private int timeToCompletion;
-
     private int buildingX;
-
     private int buildingY;
 
     public int[] findClosestResource(int startX, int startY, String resourceType, String[][] grid) {

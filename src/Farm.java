@@ -5,6 +5,7 @@ public class Farm extends Building{
         super("food", x, y);
         this.requiredWater = 10;
         setRequiredElectricity(20);
+        setRequiredWater(20);
         setHasWater(true);
         setChanceOfMalfunction(0);
         setProducedAmount(100);
@@ -48,6 +49,11 @@ public class Farm extends Building{
     public int getRequiredWater() {
         return requiredWater;
     }
+
+    public void setRequiredWater(int requiredWater) {
+        this.requiredWater = requiredWater;
+    }
+
 
 
 }
