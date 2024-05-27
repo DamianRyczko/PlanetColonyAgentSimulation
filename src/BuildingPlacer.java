@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BuildingPlacer {
     private final int daysToCompleteBuilding = 20;
@@ -74,7 +77,7 @@ public class BuildingPlacer {
                 setMostNeededResource("oxygen");
             }
 
-            setTimeToCompletion(getDaysToCompleteBuilding() / numberOfEngineers);
+            setTimeToCompletion(getDaysToCompleteBuilding());
 
             int[] coordinates = findClosestResource(startX, startY, mostNeededResource, grid);
             if (coordinates != null) {
@@ -86,26 +89,35 @@ public class BuildingPlacer {
                 System.out.println("No available resource found for " + mostNeededResource);
             }
         }
-        setTimeToCompletion(getTimeToCompletion()-1);
+        setTimeToCompletion(getTimeToCompletion()-numberOfEngineers);
+
         if (getTimeToCompletion() == 0){
-            switch(getMostNeededResource()){
-                case "water":
-                    waterPurifiers.add(new WaterPurifier(getBuildingX(),getBuildingY()));
-                    setCurrentlyBuilding(false);
-                    break;
-                case "food":
-                    farms.add(new Farm(getBuildingX(),getBuildingY()));
-                    setCurrentlyBuilding(false);
-                    break;
-                case "electricity":
-                    solarPanels.add(new SolarPanel(getBuildingX(),getBuildingY()));
-                    setCurrentlyBuilding(false);
-                    break;
-                case "oxygen":
-                    oxygenGenerators.add(new OxygenGenerator(getBuildingX(),getBuildingY()));
-                    setCurrentlyBuilding(false);
-                    break;
+            try {
+                Map<String, Map<String, String>> config = ConfigLoader.loadConfig("src/config.txt");
+
+                switch(getMostNeededResource()){
+                    case "water":
+                        waterPurifiers.add(new WaterPurifier(config.get("WaterPurifier"),getBuildingX(),getBuildingY()));
+                        setCurrentlyBuilding(false);
+                        break;
+                    case "food":
+                        farms.add(new Farm(config.get("Farm"),getBuildingX(),getBuildingY()));
+                        setCurrentlyBuilding(false);
+                        break;
+                    case "electricity":
+                        solarPanels.add(new SolarPanel(config.get("SolarPanel"),getBuildingX(),getBuildingY()));
+                        setCurrentlyBuilding(false);
+                        break;
+                    case "oxygen":
+                        oxygenGenerators.add(new OxygenGenerator(config.get("OxygenGenerator"),getBuildingX(),getBuildingY()));
+                        setCurrentlyBuilding(false);
+                        break;
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+
         }
     }
 

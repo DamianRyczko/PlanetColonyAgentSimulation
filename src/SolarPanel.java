@@ -1,13 +1,25 @@
+import java.util.Map;
+
 public class SolarPanel extends Building{
     private double panelEffectiveness; // 1 for 100% Effectiveness
-    public SolarPanel(int x, int y) {
-        super("energy", x, y);
+
+    private boolean isDirty;
+
+    public SolarPanel(Map<String, String> config, int x, int y) {
+        super(config, x, y);
         setPanelEffectiveness(1);
-        setProducedAmount(100);
-        setProductionTime(2);
-        setChanceOfMalfunction(0.01 + getRandom().nextDouble()/100);
-        setTimeToCompleteProduction(getProductionTime());
+        setIsDirty(false);
     }
+
+
+//    public SolarPanel(int x, int y) {
+//        super("energy", x, y);
+//        setPanelEffectiveness(1);
+//        setProducedAmount(100);
+//        setProductionTime(2);
+//        setChanceOfMalfunction(0.01 + getRandom().nextDouble()/100);
+//        setTimeToCompleteProduction(getProductionTime());
+//    }
 
     @Override
     public void dayCycle(ColonyResources colonyResources){
@@ -27,6 +39,9 @@ public class SolarPanel extends Building{
         else{
             setPanelEffectiveness(0.0);
         }
+        if (panelEffectiveness < 0.5){
+            setIsDirty(true);
+        }
     }
 
     public double getPanelEffectiveness() {
@@ -35,6 +50,14 @@ public class SolarPanel extends Building{
 
     public void setPanelEffectiveness(double panelEffectiveness) {
         this.panelEffectiveness = panelEffectiveness;
+    }
+
+    public boolean getDirty() {
+        return isDirty;
+    }
+
+    public void setIsDirty(boolean dirty) {
+        isDirty = dirty;
     }
 
 }

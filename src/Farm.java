@@ -1,18 +1,26 @@
+import java.util.Map;
+
 public class Farm extends Building{
     private int requiredWater;
     private boolean hasWater;
-    public Farm(int x, int y) {
-        super("food", x, y);
-        this.requiredWater = 10;
-        setRequiredElectricity(20);
-        setRequiredWater(20);
-        setHasWater(true);
-        setChanceOfMalfunction(0);
-        setProducedAmount(100);
-        setProductionTime(2);
-        setChanceOfMalfunction(0.01 + getRandom().nextDouble()/100);
-        setTimeToCompleteProduction(getProductionTime());
+
+    public Farm(Map<String, String> config, int x, int y) {
+        super(config, x, y);
     }
+
+
+//    public Farm(int x, int y) {
+//        super("food", x, y);
+//        this.requiredWater = 10;
+//        setRequiredElectricity(20);
+//        setRequiredWater(20);
+//        setHasWater(true);
+//        setChanceOfMalfunction(0);
+//        setProducedAmount(100);
+//        setProductionTime(2);
+//        setChanceOfMalfunction(0.01 + getRandom().nextDouble()/100);
+//        setTimeToCompleteProduction(getProductionTime());
+//    }
 
     @Override
     public void dayCycle(ColonyResources colonyResources){
@@ -25,8 +33,8 @@ public class Farm extends Building{
             colonyResources.setElectricity(colonyResources.getElectricity() - getRequiredElectricity());
             setHasEnergy(true);
         }
-        if(colonyResources.getWater()-getRequiredWater()>0){
-            colonyResources.setWater(colonyResources.getWater()- getRequiredWater());
+        if(colonyResources.getWater()-getRequieredWater()>0){
+            colonyResources.setWater(colonyResources.getWater()- getRequieredWater());
             setHasWater(true);
         }
         if(!getIsDamaged() && getHasEnergy() && getHasWater()){
@@ -37,23 +45,5 @@ public class Farm extends Building{
             }
         }
     }
-
-    public boolean getHasWater() {
-        return hasWater;
-    }
-
-    public void setHasWater(boolean hasWater) {
-        this.hasWater = hasWater;
-    }
-
-    public int getRequiredWater() {
-        return requiredWater;
-    }
-
-    public void setRequiredWater(int requiredWater) {
-        this.requiredWater = requiredWater;
-    }
-
-
 
 }

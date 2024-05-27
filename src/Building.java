@@ -1,27 +1,32 @@
+import java.util.Map;
 import java.util.Random;
-abstract class Building {
+abstract class Building extends Position{
     private String producedResource;
     private int producedAmount;
     private int productionTime;
     private int timeToCompleteProduction;
     private double chanceOfMalfunction;
     private int resourceWaitingForCollection;
-    private Random random;
+    private Random random = new Random();
     private boolean isDamaged;
     private boolean hasEnergy;
     private int requiredElectricity;
-    private int x;
+    private int requieredWater;
+    private boolean hasWater;
 
-    private int y;
-    public Building(String producedResource, int x, int y) {
-        this.producedResource = producedResource;
-        this.x = x;
-        this.y = y;
-        this.random = new Random();
+    public Building(Map<String, String> config, int x, int y) {
+        super(x, y);
+        setProducedResource(config.get("producedResource"));
+        setProducedAmount(Integer.parseInt(config.get("producedAmount")));
+        setProductionTime(Integer.parseInt(config.get("productionTime")));
+        setChanceOfMalfunction(Double.parseDouble(config.get("chanceOfMalfunction"))+ getRandom().nextDouble()/100);
+        setRequiredElectricity(Integer.parseInt(config.get("requiredElectricity")));
+        setRequieredWater(Integer.parseInt(config.get("requiredWater")));
         setIsDamaged(false);
         setHasEnergy(true);
+        setHasWater(true);
+        setTimeToCompleteProduction(Integer.parseInt(config.get("productionTime")));
     }
-
     public void dayCycle(ColonyResources colonyResources){
         if (getRandom().nextDouble() < getChanceOfMalfunction()){
             setIsDamaged(true);
@@ -73,23 +78,6 @@ abstract class Building {
         this.chanceOfMalfunction = chanceOfMalfunction;
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-
     public int getTimeToCompleteProduction() {
         return timeToCompleteProduction;
     }
@@ -132,5 +120,21 @@ abstract class Building {
 
     public void setRequiredElectricity(int requiredElectricity) {
         this.requiredElectricity = requiredElectricity;
+    }
+
+    public int getRequieredWater() {
+        return requieredWater;
+    }
+
+    public void setRequieredWater(int requieredWater) {
+        this.requieredWater = requieredWater;
+    }
+
+    public boolean getHasWater() {
+        return hasWater;
+    }
+
+    public void setHasWater(boolean hasWater) {
+        this.hasWater = hasWater;
     }
 }

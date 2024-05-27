@@ -1,6 +1,10 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.io.File;
+import java.util.Map;
+import java.util.Scanner;
+import java.io.FileNotFoundException;
 public class Main {
     public static void main(String[] args) {
 
@@ -16,12 +20,6 @@ public class Main {
         ArrayList<FusionReactor> fusionReactors = new ArrayList<>();
         ArrayList<SolarPanel> solarPanels = new ArrayList<>();
 
-        //        waterPurifiers.add(new WaterPurifier(1,1));
-//        farms.add(new Farm(1,2));
-//        oxygenGenerators.add(new OxygenGenerator(1,3));
-//        fusionReactors.add(new FusionReactor(1,4));
-//        solarPanels.add(new SolarPanel(1,5));
-// this is just for test
         String[][] grid = {
                 {"empty", "water", "empty", "empty", "food", "empty", "empty", "oxygen", "empty", "electricity"},
                 {"empty", "empty", "empty", "empty", "empty", "empty", "water", "empty", "empty", "empty"},
@@ -35,25 +33,25 @@ public class Main {
                 {"food", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "electricity", "empty"}
         };
 
-        HashMap < Integer ,String> typeToName = new HashMap <>();
-        typeToName.put(0, "empty");
-        typeToName.put(1, "food");
-        typeToName.put(2, "water");
-
-        ArrayList<Integer> chanceOftypes =  new ArrayList<>();
-        chanceOftypes.add(60);
-        chanceOftypes.add(15);
-        chanceOftypes.add(25);
-
-
-        int gridSizex = 30;
-        int gridSizey = 30;
-        int chanceOfRich = 20;
-        AMap map = new AMap(gridSizex, gridSizey, chanceOfRich);
-        map.setMap(chanceOftypes);
-
-        Position wynik = FindPath.BFS(new Position(0,0), new Position(5, 5), new Position(20, 20), 3);
-        System.out.println("wynik = "+wynik.toString());
+//        HashMap < Integer ,String> typeToName = new HashMap <>();
+//        typeToName.put(0, "empty");
+//        typeToName.put(1, "food");
+//        typeToName.put(2, "water");
+//
+//        ArrayList<Integer> chanceOftypes =  new ArrayList<>();
+//        chanceOftypes.add(60);
+//        chanceOftypes.add(15);
+//        chanceOftypes.add(25);
+//
+//
+//        int gridSizex = 30;
+//        int gridSizey = 30;
+//        int chanceOfRich = 20;
+//        AMap map = new AMap(gridSizex, gridSizey, chanceOfRich);
+//        map.setMap(chanceOftypes);
+//
+//        Position wynik = FindPath.BFS(new Position(0,0), new Position(5, 5), new Position(20, 20), 3);
+//        System.out.println("wynik = "+wynik.toString());
 
         int startX = 0;
         int startY = 0;
