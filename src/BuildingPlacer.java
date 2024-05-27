@@ -7,15 +7,15 @@ import java.util.Map;
 
 public class BuildingPlacer {
     private final int daysToCompleteBuilding = 20;
-    private String mostNeededResource;
+    private int mostNeededResource;
     private boolean currentlyBuilding;
     private int timeToCompletion;
     private int buildingX;
     private int buildingY;
 
-    public int[] findClosestResource(int startX, int startY, String resourceType, String[][] grid) {
-        int rows = grid.length;
-        int cols = grid[0].length;
+    public int[] findClosestResource(int startX, int startY, int resourceType, AMap map) {
+        int rows = map.getGridSizeX();
+        int cols = map.getGridSizeY();
         boolean[][] visited = new boolean[rows][cols];
         int[][] directions = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
@@ -23,12 +23,17 @@ public class BuildingPlacer {
         queue.add(new int[]{startX, startY});
         visited[startX][startY] = true;
 
+        if (resourceType == 3 || resourceType == 4){
+            resourceType = 0;
+        }
+
         while (!queue.isEmpty()) {
             int[] current = queue.poll();
             int x = current[0];
             int y = current[1];
 
-            if (grid[x][y].equals(resourceType)) {
+            if (map.getFieldType(x, y) == resourceType && map.getFieldEmpty(x, y)) {
+                map.setFieldEmpty(x,y);
                 return new int[]{x, y};
             }
 
@@ -46,15 +51,12 @@ public class BuildingPlacer {
         return null; // Resource not found
     }
 
-    public void addBuildings(ArrayList<SolarPanel> solarPanels,
-                             ArrayList<Farm> farms,
-                             ArrayList<WaterPurifier> waterPurifiers,
-                             ArrayList<OxygenGenerator> oxygenGenerators,
+    public void addBuildings( ArrayList<Object> buildings,
                              int numberOfEngineers,
                              ColonyResources colonyResources,
                              int startX,
                              int startY,
-                             String[][] grid
+                             AMap map
     ) {
         if (!isCurrentlyBuilding()) {
             int water = colonyResources.getWater();
@@ -62,24 +64,28 @@ public class BuildingPlacer {
             int electricity = colonyResources.getElectricity();
             int oxygen = colonyResources.getOxygen();
 
-            setMostNeededResource("water"); // Default to water
-            int smallest = water;
+            // 1 for food
+            // 2 for water
+            // 3 for electricityS
+            // 4 for oxygen
+            setMostNeededResource(1); // Default to food
+            int smallest = food;
 
-            if (food < smallest) {
-                smallest = food;
-                setMostNeededResource("food");
+            if (water < smallest) {
+                smallest = water;
+                setMostNeededResource(2);
             }
             if (electricity < smallest) {
                 smallest = electricity;
-                setMostNeededResource("electricity");
+                setMostNeededResource(3);
             }
             if (oxygen < smallest) {
-                setMostNeededResource("oxygen");
+                setMostNeededResource(4);
             }
 
             setTimeToCompletion(getDaysToCompleteBuilding());
 
-            int[] coordinates = findClosestResource(startX, startY, mostNeededResource, grid);
+            int[] coordinates = findClosestResource(startX, startY, mostNeededResource, map);
             if (coordinates != null) {
                 System.out.println("Building " + mostNeededResource + " at coordinates: (" + coordinates[0] + ", " + coordinates[1] + ")");
                 setCurrentlyBuilding(true);
@@ -96,21 +102,33 @@ public class BuildingPlacer {
                 Map<String, Map<String, String>> config = ConfigLoader.loadConfig("src/config.txt");
 
                 switch(getMostNeededResource()){
-                    case "water":
-                        waterPurifiers.add(new WaterPurifier(config.get("WaterPurifier"),getBuildingX(),getBuildingY()));
+                    case 1:
+                        buildings.add(new Farm(config.get("Farm"),getBuildingX(),getBuildingY()));
+                        System.out.println("===========================================");
+                        System.out.println("Placed a FARM");
+                        System.out.println("============================================");
                         setCurrentlyBuilding(false);
                         break;
-                    case "food":
-                        farms.add(new Farm(config.get("Farm"),getBuildingX(),getBuildingY()));
+                    case 2:
+                        buildings.add(new WaterPurifier(config.get("WaterPurifier"),getBuildingX(),getBuildingY()));
                         setCurrentlyBuilding(false);
+                        System.out.println("===========================================");
+                        System.out.println("Placed a WaterPurifer");
+                        System.out.println("============================================");
                         break;
-                    case "electricity":
-                        solarPanels.add(new SolarPanel(config.get("SolarPanel"),getBuildingX(),getBuildingY()));
+                    case 3:
+                        buildings.add(new SolarPanel(config.get("SolarPanel"),getBuildingX(),getBuildingY()));
                         setCurrentlyBuilding(false);
+                        System.out.println("===========================================");
+                        System.out.println("Placed a SolarPanel");
+                        System.out.println("============================================");
                         break;
-                    case "oxygen":
-                        oxygenGenerators.add(new OxygenGenerator(config.get("OxygenGenerator"),getBuildingX(),getBuildingY()));
+                    case 4:
+                        buildings.add(new OxygenGenerator(config.get("OxygenGenerator"),getBuildingX(),getBuildingY()));
                         setCurrentlyBuilding(false);
+                        System.out.println("===========================================");
+                        System.out.println("Placed a OxygenGenerator");
+                        System.out.println("============================================");
                         break;
                 }
 
@@ -133,11 +151,11 @@ public class BuildingPlacer {
         this.timeToCompletion = timeToCompletion;
     }
 
-    public String getMostNeededResource() {
+    public int getMostNeededResource() {
         return mostNeededResource;
     }
 
-    public void setMostNeededResource(String mostNeededResource) {
+    public void setMostNeededResource(int mostNeededResource) {
         this.mostNeededResource = mostNeededResource;
     }
 

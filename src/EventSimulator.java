@@ -7,12 +7,7 @@ public class EventSimulator {
         this.randomEvent = randomEvent;
         this.random = new Random();
     }
-    public void generateEvent(ArrayList<SolarPanel> solarPanels,
-                              ArrayList<Farm> farms,
-                              ArrayList<FusionReactor> fusionReactors,
-                              ArrayList<WaterPurifier> waterPurifiers,
-                              ArrayList<OxygenGenerator> oxygenGenerators
-    ) {
+    public void generateEvent(ArrayList<Object> buildings) {
         int event = getRandomEvent().drawEvent(3);
         switch (event) {
             case 0:
@@ -20,44 +15,49 @@ public class EventSimulator {
                 break;
             case 1:
                 System.out.println("Event 'Dust storm'");
-                for (SolarPanel solarPanel : solarPanels) {
-                    solarPanel.setPanelEffectiveness(0);
-                }
+                for (Object building : buildings) {
+                    if (building instanceof SolarPanel solarPanel) {
+                        solarPanel.setPanelEffectiveness(0);
+                        solarPanel.setIsDirty(true);
+                    }}
                 break;
             case 2:
                 System.out.println("Event 'Meteor rain'");
                 double chanceOfDamage = 0.2;
-                for (SolarPanel solarPanel : solarPanels) {
-                    if (random.nextDouble() < chanceOfDamage) {
-                        solarPanel.setIsDamaged(true);
-                    }
-                }
-                for (Farm farm : farms) {
-                    if (random.nextDouble() < chanceOfDamage) {
-                        farm.setIsDamaged(true);
-                    }
-                }
-                for (FusionReactor fusionReactor : fusionReactors) {
-                    if (random.nextDouble() < chanceOfDamage) {
-                        fusionReactor.setIsDamaged(true);
-                    }
-                }
-                for (WaterPurifier waterPurifier : waterPurifiers) {
-                    if (random.nextDouble() < chanceOfDamage) {
-                        waterPurifier.setIsDamaged(true);
-                    }
-                }
-                for (OxygenGenerator oxygenGenerator : oxygenGenerators) {
-                    if (random.nextDouble() < chanceOfDamage) {
-                        oxygenGenerator.setIsDamaged(true);
+                for (Object building : buildings) {
+                    if (building instanceof Farm farm) {
+                        if (random.nextDouble() < chanceOfDamage) {
+                            farm.setIsDamaged(true);
+                        }
+
+                    } else if (building instanceof SolarPanel solarPanel) {
+                        if (random.nextDouble() < chanceOfDamage) {
+                            solarPanel.setIsDamaged(true);
+                        }
+
+                    } else if (building instanceof FusionReactor fusionReactor) {
+                        if (random.nextDouble() < chanceOfDamage) {
+                            fusionReactor.setIsDamaged(true);
+                        }
+
+                    } else if (building instanceof OxygenGenerator oxygenGenerator) {
+                        if (random.nextDouble() < chanceOfDamage) {
+                            oxygenGenerator.setIsDamaged(true);
+                        }
+
+                    } else if (building instanceof WaterPurifier waterPurifier) {
+                        if (random.nextDouble() < chanceOfDamage) {
+                            waterPurifier.setIsDamaged(true);
+                        }
                     }
                 }
                 break;
             case 3:
                 System.out.println("Event 'Famine'");
-                for (Farm farm : farms) {
-                    farm.setResourceWaitingForCollection(0);
-                }
+                for (Object building : buildings) {
+                    if (building instanceof Farm farm) {
+                        farm.setResourceWaitingForCollection(0);
+                    }}
                 break;
         }
     }

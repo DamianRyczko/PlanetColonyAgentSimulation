@@ -44,6 +44,21 @@ abstract class Building extends Position{
             }
         }
     }
+    public void show(){
+        System.out.println("ProducedResource: "+getProducedResource());
+        System.out.println("HasWater: "+getHasWater());
+        System.out.println("HasEnergy: "+getHasEnergy());
+        System.out.println("IsDamaged: "+getIsDamaged());
+        System.out.println("ProducedAmount: "+getProducedAmount());
+        System.out.println("ProductionTime: "+getProductionTime());
+        System.out.println("ChanceOfMalfunction: "+getChanceOfMalfunction());
+        System.out.println("X: "+getX());
+        System.out.println("Y: "+getY());
+        System.out.println("ResourceWaitingForCollection: "+getResourceWaitingForCollection());
+        System.out.println("TimeToCompleteProduction: "+getTimeToCompleteProduction());
+        System.out.println("RequieredWater: "+getRequieredWater());
+        System.out.println("RequiredElectricity: "+getRequiredElectricity());
+    }
 
 
     public String getProducedResource() {

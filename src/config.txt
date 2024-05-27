@@ -1,7 +1,7 @@
 [Farm]
 producedResource=food
 producedAmount=50
-productionTime=30
+productionTime=2
 chanceOfMalfunction=0.05
 requiredElectricity=10
 requiredWater=20
@@ -9,15 +9,15 @@ requiredWater=20
 [SolarPanel]
 producedResource=electricity
 producedAmount=100
-productionTime=60
+productionTime=4
 chanceOfMalfunction=0.01
 requiredElectricity=0
 requiredWater=0
 
 [FusionReactor]
-producedResource=eusionEnergy
-producedAmount=1000
-productionTime=120
+producedResource=electricity
+producedAmount=300
+productionTime=1
 chanceOfMalfunction=0.02
 requiredElectricity=0
 requiredWater=0
@@ -25,7 +25,7 @@ requiredWater=0
 [OxygenGenerator]
 producedResource=oxygen
 producedAmount=200
-productionTime=45
+productionTime=2
 chanceOfMalfunction=0.03
 requiredElectricity=20
 requiredWater=0
@@ -33,7 +33,7 @@ requiredWater=0
 [WaterPurifier]
 producedResource=water
 producedAmount=300
-productionTime=25
+productionTime=3
 chanceOfMalfunction=0.01
 requiredElectricity=15
 requiredWater=0

@@ -12,104 +12,91 @@ public class Main {
         var eventSimulator = new EventSimulator(eventRandomizer);
         var colonyResources = new ColonyResources(380, 400, 400, 400);
 
+        ArrayList<Object> buildings = new ArrayList<>();
         var buildingPlacer = new BuildingPlacer();
 
-        ArrayList<WaterPurifier> waterPurifiers = new ArrayList<>();
-        ArrayList<Farm>  farms= new ArrayList<>();
-        ArrayList<OxygenGenerator> oxygenGenerators = new ArrayList<>();
-        ArrayList<FusionReactor> fusionReactors = new ArrayList<>();
-        ArrayList<SolarPanel> solarPanels = new ArrayList<>();
+        try {
+            Map<String, Map<String, String>> config = ConfigLoader.loadConfig("src/config.txt");
 
-        String[][] grid = {
-                {"empty", "water", "empty", "empty", "food", "empty", "empty", "oxygen", "empty", "electricity"},
-                {"empty", "empty", "empty", "empty", "empty", "empty", "water", "empty", "empty", "empty"},
-                {"electricity", "empty", "empty", "empty", "empty", "oxygen", "empty", "empty", "empty", "empty"},
-                {"empty", "food", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "water"},
-                {"empty", "empty", "empty", "empty", "empty", "empty", "electricity", "empty", "empty", "empty"},
-                {"empty", "empty", "oxygen", "empty", "empty", "food", "empty", "empty", "empty", "empty"},
-                {"empty", "empty", "empty", "empty", "empty", "empty", "empty", "water", "empty", "empty"},
-                {"empty", "empty", "empty", "electricity", "empty", "empty", "empty", "empty", "empty", "food"},
-                {"empty", "empty", "empty", "empty", "oxygen", "empty", "empty", "empty", "empty", "empty"},
-                {"food", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "electricity", "empty"}
-        };
+            buildings.add(new FusionReactor(config.get("FusionReactor"),0,0));
 
-//        HashMap < Integer ,String> typeToName = new HashMap <>();
-//        typeToName.put(0, "empty");
-//        typeToName.put(1, "food");
-//        typeToName.put(2, "water");
-//
-//        ArrayList<Integer> chanceOftypes =  new ArrayList<>();
-//        chanceOftypes.add(60);
-//        chanceOftypes.add(15);
-//        chanceOftypes.add(25);
-//
-//
-//        int gridSizex = 30;
-//        int gridSizey = 30;
-//        int chanceOfRich = 20;
-//        AMap map = new AMap(gridSizex, gridSizey, chanceOfRich);
-//        map.setMap(chanceOftypes);
-//
-//        Position wynik = FindPath.BFS(new Position(0,0), new Position(5, 5), new Position(20, 20), 3);
-//        System.out.println("wynik = "+wynik.toString());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+        HashMap < Integer ,String> typeToName = new HashMap <>();
+        typeToName.put(0, "empty");
+        typeToName.put(1, "food");
+        typeToName.put(2, "water");
+
+        ArrayList<Integer> chanceOftypes =  new ArrayList<>();
+        chanceOftypes.add(60);
+        chanceOftypes.add(15);
+        chanceOftypes.add(25);
+
+
+        int gridSizex = 30;
+        int gridSizey = 30;
+        int chanceOfRich = 20;
+        AMap map = new AMap(gridSizex, gridSizey, chanceOfRich);
+        map.setMap(chanceOftypes);
+
+        //Position wynik = FindPath.BFS(new Position(0,0), new Position(5, 5), new Position(20, 20), 3);
+        //System.out.println("wynik = "+wynik.toString());
 
         int startX = 0;
         int startY = 0;
         int numberOfEngineers = 10;
 
-        buildingPlacer.addBuildings(solarPanels, farms, waterPurifiers, oxygenGenerators, numberOfEngineers, colonyResources, startX, startY, grid);
 
         int days = 100;
         //this is just for test
         while(days >= 0){
 
             //generates events
-            eventSimulator.generateEvent(solarPanels, farms, fusionReactors, waterPurifiers, oxygenGenerators);
+            eventSimulator.generateEvent(buildings);
 
             //adds buildings
-            buildingPlacer.addBuildings(solarPanels, farms, waterPurifiers, oxygenGenerators, numberOfEngineers, colonyResources, startX, startY, grid);
+            buildingPlacer.addBuildings(buildings, numberOfEngineers, colonyResources, startX, startY, map);
+
             //cycles all buildings
-            System.out.println("====================Water purifiers=======================");
-            for (WaterPurifier waterPurifier : waterPurifiers) {
-                waterPurifier.dayCycle(colonyResources);
-                System.out.println("--------------------");
-                System.out.println(waterPurifier.getIsDamaged());
-                System.out.println(waterPurifier.getResourceWaitingForCollection());
+            for (Object building : buildings) {
+                System.out.println("+++++++++++++++++++++++++++++");
+                if (building instanceof Farm farm) {
+                    System.out.println("This is a Farm.");
+                    // Cast to Farm to access Farm-specific methods
+                    farm.dayCycle(colonyResources);
+                    farm.show();
+
+                } else if (building instanceof SolarPanel solarPanel) {
+                    System.out.println("This is a SolarPanel.");
+                    // Cast to SolarPanel to access SolarPanel-specific methods
+                    solarPanel.dayCycle(colonyResources);
+                    solarPanel.show();
+                } else if (building instanceof FusionReactor fusionReactor) {
+                    System.out.println("This is a FusionReactor.");
+                    // Cast to FusionReactor to access FusionReactor-specific methods
+                    fusionReactor.dayCycle(colonyResources);
+                    fusionReactor.show();
+                } else if (building instanceof OxygenGenerator oxygenGenerator) {
+                    System.out.println("This is an OxygenGenerator.");
+                    // Cast to OxygenGenerator to access OxygenGenerator-specific methods
+                    oxygenGenerator.dayCycle(colonyResources);
+                    oxygenGenerator.show();
+                } else if (building instanceof WaterPurifier waterPurifier) {
+                    System.out.println("This is a WaterPurifier.");
+                    // Cast to WaterPurifier to access WaterPurifier-specific methods
+                    waterPurifier.dayCycle(colonyResources);
+                    waterPurifier.show();
+                }
             }
-            System.out.println("====================Farms=======================");
-            for (Farm farm : farms) {
-                farm.dayCycle(colonyResources);
-                System.out.println("--------------------");
-                System.out.println(farm.getIsDamaged());
-                System.out.println(farm.getResourceWaitingForCollection());
-                System.out.println(farm.getTimeToCompleteProduction());
-            }
-            System.out.println("====================Oxygen generators=======================");
-            for (OxygenGenerator oxygenGenerator : oxygenGenerators) {
-                oxygenGenerator.dayCycle(colonyResources);
-                System.out.println("--------------------");
-                System.out.println(oxygenGenerator.getIsDamaged());
-                System.out.println(oxygenGenerator.getResourceWaitingForCollection());
-            }
-            System.out.println("====================Fusion reactors=======================");
-            for (FusionReactor fusionReactor : fusionReactors) {
-                fusionReactor.dayCycle(colonyResources);
-                System.out.println("--------------------");
-                System.out.println(fusionReactor.getIsDamaged());
-                System.out.println(fusionReactor.getResourceWaitingForCollection());
-            }
-            System.out.println("====================Solar panels=======================");
-            for (SolarPanel solarPanel : solarPanels) {
-                solarPanel.dayCycle(colonyResources);
-                System.out.println("--------------------");
-                System.out.println(solarPanel.getIsDamaged());
-                System.out.println(solarPanel.getResourceWaitingForCollection());
-            }
+
             System.out.println("====================Colony resources=======================");
-            System.out.println(colonyResources.getFood());
-            System.out.println(colonyResources.getOxygen());
-            System.out.println(colonyResources.getWater());
-            System.out.println(colonyResources.getElectricity());
+            colonyResources.show();
 
             days--;
         }
