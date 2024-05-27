@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args) {
@@ -34,6 +35,25 @@ public class Main {
                 {"food", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "electricity", "empty"}
         };
 
+        HashMap < Integer ,String> typeToName = new HashMap <>();
+        typeToName.put(0, "empty");
+        typeToName.put(1, "food");
+        typeToName.put(2, "water");
+
+        ArrayList<Integer> chanceOftypes =  new ArrayList<>();
+        chanceOftypes.add(60);
+        chanceOftypes.add(15);
+        chanceOftypes.add(25);
+
+
+        int gridSizex = 30;
+        int gridSizey = 30;
+        int chanceOfRich = 20;
+        AMap map = new AMap(gridSizex, gridSizey, chanceOfRich);
+        map.setMap(chanceOftypes);
+
+        Position wynik = FindPath.BFS(new Position(0,0), new Position(5, 5), new Position(20, 20), 3);
+        System.out.println("wynik = "+wynik.toString());
 
         int startX = 0;
         int startY = 0;
