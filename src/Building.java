@@ -1,6 +1,6 @@
 import java.util.Map;
 import java.util.Random;
-abstract class Building extends Position{
+abstract class Building{
     private String producedResource;
     private int producedAmount;
     private int productionTime;
@@ -8,6 +8,7 @@ abstract class Building extends Position{
     private double chanceOfMalfunction;
     private int resourceWaitingForCollection;
     private Random random = new Random();
+    private Position postion;
     private boolean isDamaged;
     private boolean hasEnergy;
     private int requiredElectricity;
@@ -15,7 +16,7 @@ abstract class Building extends Position{
     private boolean hasWater;
 
     public Building(Map<String, String> config, int x, int y) {
-        super(x, y);
+        this.postion = new Position(x, y);
         setProducedResource(config.get("producedResource"));
         setProducedAmount(Integer.parseInt(config.get("producedAmount")));
         setProductionTime(Integer.parseInt(config.get("productionTime")));
@@ -52,8 +53,8 @@ abstract class Building extends Position{
         System.out.println("ProducedAmount: "+getProducedAmount());
         System.out.println("ProductionTime: "+getProductionTime());
         System.out.println("ChanceOfMalfunction: "+getChanceOfMalfunction());
-        System.out.println("X: "+getX());
-        System.out.println("Y: "+getY());
+        System.out.println("X: "+getPostion().getX());
+        System.out.println("Y: "+getPostion().getY());
         System.out.println("ResourceWaitingForCollection: "+getResourceWaitingForCollection());
         System.out.println("TimeToCompleteProduction: "+getTimeToCompleteProduction());
         System.out.println("RequieredWater: "+getRequieredWater());
@@ -152,4 +153,9 @@ abstract class Building extends Position{
     public void setHasWater(boolean hasWater) {
         this.hasWater = hasWater;
     }
+
+    public Position getPostion() {
+        return postion;
+    }
+
 }
