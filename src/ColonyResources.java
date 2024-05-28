@@ -34,6 +34,12 @@ public class ColonyResources {
 //    }
 //
 //    }
+    public boolean doWeHaveResources(){
+        if (food <= 0 || water <= 0 || oxygen <= 0 || electricity <= 0){
+            return false;
+        }
+        return true;
+    }
 
     public int getFood() {
         return food;
@@ -41,6 +47,10 @@ public class ColonyResources {
 
     public void setFood(int food) {
         this.food = food;
+    }
+
+    public void subtractFood(int food) {
+        this.food -= food;
     }
 
     public int getWater() {
@@ -51,6 +61,10 @@ public class ColonyResources {
         this.water = water;
     }
 
+    public void subtractWater(int water) {
+        this.water -= water;
+    }
+
     public int getOxygen() {
         return oxygen;
     }
@@ -59,11 +73,19 @@ public class ColonyResources {
         this.oxygen = oxygen;
     }
 
+    public void subtractOxygen(int oxygen) {
+        this.oxygen -= oxygen;
+    }
+
     public int getElectricity() {
         return electricity;
     }
 
     public void setElectricity(int electricity) {
         this.electricity = electricity;
+    }
+
+    public void subtractElectricity(int electricity) {
+        this.electricity -= electricity;
     }
 }
