@@ -19,9 +19,9 @@ public class Collector extends Astronaut {
 
     }
 
-     private void findGoal(){
+    private void findGoal(){
 
-     }
+    }
 
 
 }
