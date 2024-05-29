@@ -5,12 +5,13 @@ import java.io.File;
 import java.util.Map;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
-public class Main {
-    public static void main(String[] args) {
 
+public class Main {
+
+    public static void main(String[] args) {
+        var colonyResources = new ColonyResources(380, 400, 400, 400);
         var eventRandomizer = new EventRandomizer(0.05);
         var eventSimulator = new EventSimulator(eventRandomizer);
-        var colonyResources = new ColonyResources(380, 400, 400, 400);
 
         ArrayList<Object> buildings = new ArrayList<>();
         var buildingPlacer = new BuildingPlacer();
@@ -25,43 +26,34 @@ public class Main {
             e.printStackTrace();
         }
 
+        AMap map = new AMap(50, 50, 20);
+        ArrayList<Integer> chanceOfTypes = new ArrayList<>();
+        chanceOfTypes.add(90);
+        chanceOfTypes.add(5);
+        chanceOfTypes.add(5);
+        map.setMap(chanceOfTypes);
 
-
-
-        HashMap < Integer ,String> typeToName = new HashMap <>();
-        typeToName.put(0, "empty");
-        typeToName.put(1, "food");
-        typeToName.put(2, "water");
-
-        ArrayList<Integer> chanceOftypes =  new ArrayList<>();
-        chanceOftypes.add(60);
-        chanceOftypes.add(15);
-        chanceOftypes.add(25);
-
-
-        int gridSizex = 30;
-        int gridSizey = 30;
-        int chanceOfRich = 20;
-        AMap map = new AMap(gridSizex, gridSizey, chanceOfRich);
-        map.setMap(chanceOftypes);
-
-        //Position wynik = FindPath.BFS(new Position(0,0), new Position(5, 5), new Position(20, 20), 3);
-        //System.out.println("wynik = "+wynik.toString());
+        SimulationFrame frame = new SimulationFrame(colonyResources, map, buildings);
 
         int startX = 0;
         int startY = 0;
         int numberOfEngineers = 10;
 
+        for (int i = 0; i<100; i++) {
+            try {
+                // Sleep for 1 second (1000 milliseconds)
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
-        int days = 100;
-        //this is just for test
-        while(days >= 0){
 
-            //generates events
+            frame.getSimulationPanelLeft().updateResources(colonyResources);
+
             eventSimulator.generateEvent(buildings);
-
             //adds buildings
             buildingPlacer.addBuildings(buildings, numberOfEngineers, colonyResources, startX, startY, map);
+            frame.repaintMap();
 
             //cycles all buildings
             for (Object building : buildings) {
@@ -95,11 +87,8 @@ public class Main {
                 }
             }
 
-            System.out.println("====================Colony resources=======================");
-            colonyResources.show();
-
-            days--;
         }
-
     }
 }
+
+

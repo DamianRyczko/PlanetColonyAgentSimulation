@@ -32,7 +32,6 @@ public class AMap {
         }
     }
 
-
     public int getGridSizeX() {
         return gridSizeX;
     }
