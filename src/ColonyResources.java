@@ -25,12 +25,20 @@ public class ColonyResources {
         this.food = food;
     }
 
+    public void subtractFood(int food) {
+        this.food -= food;
+    }
+
     public int getWater() {
         return water;
     }
 
     public void setWater(int water) {
         this.water = water;
+    }
+
+    public void subtractWater(int water) {
+        this.water -= water;
     }
 
     public int getOxygen() {
@@ -41,11 +49,19 @@ public class ColonyResources {
         this.oxygen = oxygen;
     }
 
+    public void subtractOxygen(int oxygen) {
+        this.oxygen -= oxygen;
+    }
+
     public int getElectricity() {
         return electricity;
     }
 
     public void setElectricity(int electricity) {
         this.electricity = electricity;
+    }
+
+    public void subtractElectricity(int electricity) {
+        this.electricity -= electricity;
     }
 }
