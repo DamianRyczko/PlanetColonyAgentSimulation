@@ -7,12 +7,11 @@ public class SimulationPanelLeft extends JPanel {
     private JLabel waterLabel;
     private JLabel electricityLabel;
     private JLabel oxygenLabel;
-
-//    private ResourceGraphPanel resourceGraphPanel;
+    private JTextArea eventMessagesTextArea;
 
     public SimulationPanelLeft(ColonyResources colonyResources) {
         this.setBackground(new Color(0x678f9c));
-        this.setPreferredSize(new Dimension(300, 200));
+        this.setPreferredSize(new Dimension(300, 400)); // Adjusted height to accommodate the JTextArea and other components
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); // Set BoxLayout for vertical arrangement
 
         Font labelFont = new Font("Lato", Font.BOLD, 20);
@@ -28,8 +27,17 @@ public class SimulationPanelLeft extends JPanel {
         this.add(oxygenLabel);
         this.add(electricityLabel);
 
-//        resourceGraphPanel = new ResourceGraphPanel(colonyResources);
-//        this.add(resourceGraphPanel);
+        // Create and add JTextArea for event messages
+        eventMessagesTextArea = new JTextArea();
+        eventMessagesTextArea.setFont(new Font("Lato", Font.PLAIN, 14));
+        eventMessagesTextArea.setLineWrap(true);
+        eventMessagesTextArea.setWrapStyleWord(true);
+        eventMessagesTextArea.setEditable(false);
+        eventMessagesTextArea.setBackground(new Color(0xCCCCCC)); // Background color for visibility
+
+        JScrollPane scrollPane = new JScrollPane(eventMessagesTextArea);
+        scrollPane.setPreferredSize(new Dimension(300, 100));
+        this.add(scrollPane);
     }
 
     private JLabel createLabel(String text, Font font, Color valueColor) {
@@ -45,6 +53,14 @@ public class SimulationPanelLeft extends JPanel {
         waterLabel.setText("Water: " + colonyResources.getWater());
         oxygenLabel.setText("Oxygen: " + colonyResources.getOxygen());
         electricityLabel.setText("Electricity: " + colonyResources.getElectricity());
-//        resourceGraphPanel.updateValues(colonyResources);
+    }
+
+    public void appendEventMessage(String message) {
+        eventMessagesTextArea.append(message + "\n");
+        eventMessagesTextArea.setCaretPosition(eventMessagesTextArea.getDocument().getLength()); // Scroll to the bottom
+    }
+
+    public void clearEventMessages() {
+        eventMessagesTextArea.setText("");
     }
 }

@@ -8,7 +8,7 @@ public class SimulationFrame extends JFrame {
 
     SimulationPanelLeft simulationPanelLeft;
     SimulationPanelDisplay simulationPanelDisplay;
-    public SimulationFrame(ColonyResources colonyResources, AMap map, ArrayList<Object> buildings){;
+    public SimulationFrame(ColonyResources colonyResources, AMap map, ArrayList<Object> buildings,  ArrayList<Astronaut> astronauts){;
         this.setTitle("Colony Simulation");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // exit out of application == stop simulation
         this.setResizable(true);
@@ -19,7 +19,7 @@ public class SimulationFrame extends JFrame {
 
         this.simulationPanelLeft = new SimulationPanelLeft(colonyResources);
         this.add(simulationPanelLeft, BorderLayout.WEST);
-        this.simulationPanelDisplay = new SimulationPanelDisplay(map, buildings);
+        this.simulationPanelDisplay = new SimulationPanelDisplay(map, buildings, astronauts);
         this.add(simulationPanelDisplay, BorderLayout.CENTER);
         this.setVisible(true);
         this.getContentPane().setBackground(new Color(0x575b61));

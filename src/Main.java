@@ -11,20 +11,17 @@ public class Main {
     public static void main(String[] args) {
         var colonyResources = new ColonyResources(380, 400, 400, 400);
         var eventRandomizer = new EventRandomizer(0.05);
-        var eventSimulator = new EventSimulator(eventRandomizer);
+
 
         ArrayList<Object> buildings = new ArrayList<>();
+        ArrayList<Astronaut> astronauts = new ArrayList<>();
+
+
+        astronauts.add(new Collector(new Position(5,15),10,1,34));
+
+
         var buildingPlacer = new BuildingPlacer();
 
-        try {
-            Map<String, Map<String, String>> config = ConfigLoader.loadConfig("src/config.txt");
-
-            buildings.add(new FusionReactor(config.get("FusionReactor"),0,0));
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         AMap map = new AMap(50, 50, 20);
         ArrayList<Integer> chanceOfTypes = new ArrayList<>();
@@ -33,26 +30,40 @@ public class Main {
         chanceOfTypes.add(5);
         map.setMap(chanceOfTypes);
 
-        SimulationFrame frame = new SimulationFrame(colonyResources, map, buildings);
+        int startX = 24;
+        int startY = 24;
+        int numberOfEngineers = 5;
 
-        int startX = 0;
-        int startY = 0;
-        int numberOfEngineers = 10;
+        try {
+            Map<String, Map<String, String>> config = ConfigLoader.loadConfig("src/config.txt");
+
+            buildings.add(new FusionReactor(config.get("FusionReactor"),startX,startY));
+            map.setFieldEmpty(startX,startY);
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        SimulationFrame frame = new SimulationFrame(colonyResources, map, buildings, astronauts);
+        var eventSimulator = new EventSimulator(eventRandomizer, frame.getSimulationPanelLeft());
+
+
 
         for (int i = 0; i<100; i++) {
-            try {
-                // Sleep for 1 second (1000 milliseconds)
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
 
             frame.getSimulationPanelLeft().updateResources(colonyResources);
 
             eventSimulator.generateEvent(buildings);
+            frame.repaintMap();
             //adds buildings
             buildingPlacer.addBuildings(buildings, numberOfEngineers, colonyResources, startX, startY, map);
+            Astronaut astronaut = astronauts.get(0); // Assuming the first one is a Collector
+            if (astronaut instanceof Collector) {
+                Collector collector = (Collector) astronaut;
+                collector.setPosition(new Position(10+i, 25+i)); // Set new position
+            }
             frame.repaintMap();
 
             //cycles all buildings
@@ -85,6 +96,12 @@ public class Main {
                     waterPurifier.dayCycle(colonyResources);
                     waterPurifier.show();
                 }
+            }
+            try {
+                // Sleep for 1 second (1000 milliseconds)
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
 
         }
