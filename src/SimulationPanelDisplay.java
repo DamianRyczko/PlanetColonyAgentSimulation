@@ -28,10 +28,19 @@ public class SimulationPanelDisplay extends JPanel {
         typeToIcon.put(6, new ImageIcon("building_3.png"));
         typeToIcon.put(7, new ImageIcon("building_2.png"));
 
+        typeToIcon.put(8, new ImageIcon("building_1_damaged.png"));
+        typeToIcon.put(9, new ImageIcon("building_4_damaged.png"));
+        typeToIcon.put(10, new ImageIcon("building_5_damaged.png"));
+        typeToIcon.put(11, new ImageIcon("building_3_damaged.png"));
+        typeToIcon.put(12, new ImageIcon("building_2_damaged.png"));
+
+        typeToIcon.put(13, new ImageIcon("building_4_dirty.png"));
+
+
         astronautTypeToColor = new HashMap<>();
-        astronautTypeToColor.put(1, Color.RED); // Type 1 astronauts
-        astronautTypeToColor.put(2, Color.BLUE); // Type 2 astronauts
-        astronautTypeToColor.put(3, Color.GREEN); // Type 3 astronauts
+        astronautTypeToColor.put(1, Color.GREEN); // Type 1 astronauts
+        astronautTypeToColor.put(2, Color.RED); // Type 2 astronauts
+        astronautTypeToColor.put(3, Color.BLUE); // Type 3 astronauts
         // Add more types as needed
     }
 
@@ -62,26 +71,44 @@ public class SimulationPanelDisplay extends JPanel {
                         if (building instanceof Farm farm) {
                             if (farm.getPostion().getX() == x && farm.getPostion().getY() == y) {
                                 fieldType = 3;
+                                if (farm.getIsDamaged()){
+                                    fieldType = 8;
+                                }
                                 break;
                             }
                         } else if (building instanceof SolarPanel solarPanel) {
                             if (solarPanel.getPostion().getX() == x && solarPanel.getPostion().getY() == y) {
                                 fieldType = 4;
+                                if (solarPanel.getDirty()){
+                                    fieldType = 13;
+                                }
+                                if (solarPanel.getIsDamaged()){
+                                    fieldType = 9;
+                                }
                                 break;
                             }
                         } else if (building instanceof FusionReactor fusionReactor) {
                             if (fusionReactor.getPostion().getX() == x && fusionReactor.getPostion().getY() == y) {
                                 fieldType = 5;
+                                if (fusionReactor.getIsDamaged()){
+                                    fieldType = 10;
+                                }
                                 break;
                             }
                         } else if (building instanceof OxygenGenerator oxygenGenerator) {
                             if (oxygenGenerator.getPostion().getX() == x && oxygenGenerator.getPostion().getY() == y) {
                                 fieldType = 6;
+                                if (oxygenGenerator.getIsDamaged()){
+                                    fieldType = 11;
+                                }
                                 break;
                             }
                         } else if (building instanceof WaterPurifier waterPurifier) {
                             if (waterPurifier.getPostion().getX() == x && waterPurifier.getPostion().getY() == y) {
                                 fieldType = 7;
+                                if (waterPurifier.getIsDamaged()){
+                                    fieldType = 12;
+                                }
                                 break;
                             }
                         }

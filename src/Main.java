@@ -32,7 +32,7 @@ public class Main {
 
         int startX = 24;
         int startY = 24;
-        int numberOfEngineers = 5;
+        int numberOfEngineers = 20;
 
         try {
             Map<String, Map<String, String>> config = ConfigLoader.loadConfig("src/config.txt");
