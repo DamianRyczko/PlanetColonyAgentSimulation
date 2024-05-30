@@ -38,10 +38,10 @@ public class SimulationPanelDisplay extends JPanel {
 
 
         astronautTypeToColor = new HashMap<>();
-        astronautTypeToColor.put(1, Color.GREEN); // Type 1 astronauts
-        astronautTypeToColor.put(2, Color.RED); // Type 2 astronauts
-        astronautTypeToColor.put(3, Color.BLUE); // Type 3 astronauts
-        // Add more types as needed
+        astronautTypeToColor.put(1, Color.GREEN);
+        astronautTypeToColor.put(2, Color.RED);
+        astronautTypeToColor.put(3, Color.BLUE);
+        astronautTypeToColor.put(4, Color.DARK_GRAY);
     }
 
     @Override
@@ -129,11 +129,20 @@ public class SimulationPanelDisplay extends JPanel {
             int type= 0;
             if(astronaut instanceof Collector collector) {
                 type = 1;
+                if (!collector.isAlive()){
+                    type = 4;
+                }
             } else if (astronaut instanceof Medic medic) {
                 type = 2;
+                if (!medic.isAlive()){
+                    type = 4;
+                }
 
             } else if (astronaut instanceof Engineer engineer) {
                 type = 3;
+                if (!engineer.isAlive()){
+                    type = 4;
+                }
             }
 
             int health = astronaut.getHealth();

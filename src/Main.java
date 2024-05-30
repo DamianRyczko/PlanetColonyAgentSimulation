@@ -23,11 +23,11 @@ public class Main {
         var buildingPlacer = new BuildingPlacer();
 
 
-        AMap map = new AMap(50, 50, 20);
+        AMap map = new AMap(70, 50, 20);
         ArrayList<Integer> chanceOfTypes = new ArrayList<>();
-        chanceOfTypes.add(90);
-        chanceOfTypes.add(5);
-        chanceOfTypes.add(5);
+        chanceOfTypes.add(95);
+        chanceOfTypes.add(3);
+        chanceOfTypes.add(2);
         map.setMap(chanceOfTypes);
 
         int startX = 24;
@@ -63,6 +63,10 @@ public class Main {
             if (astronaut instanceof Collector) {
                 Collector collector = (Collector) astronaut;
                 collector.setPosition(new Position(10+i, 25+i)); // Set new position
+                collector.setHealth(collector.getHealth()-10);
+                if(collector.getHealth() <= 0){
+                    collector.kill();
+                }
             }
             frame.repaintMap();
 
@@ -99,7 +103,7 @@ public class Main {
             }
             try {
                 // Sleep for 1 second (1000 milliseconds)
-                Thread.sleep(1000);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
