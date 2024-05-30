@@ -15,7 +15,7 @@ public class SimulationPanelLeft extends JPanel {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); // Set BoxLayout for vertical arrangement
 
         Font labelFont = new Font("Lato", Font.BOLD, 20);
-        Color valueColor = new Color(0xffffff); // Slightly different color for values
+        Color valueColor = new Color(0xffffff);
 
         foodLabel = createLabel("Food: " + colonyResources.getFood(), labelFont, valueColor);
         waterLabel = createLabel("Water: " + colonyResources.getWater(), labelFont, valueColor);
@@ -33,7 +33,7 @@ public class SimulationPanelLeft extends JPanel {
         eventMessagesTextArea.setLineWrap(true);
         eventMessagesTextArea.setWrapStyleWord(true);
         eventMessagesTextArea.setEditable(false);
-        eventMessagesTextArea.setBackground(new Color(0xCCCCCC)); // Background color for visibility
+        eventMessagesTextArea.setBackground(new Color(0xCCCCCC));
 
         JScrollPane scrollPane = new JScrollPane(eventMessagesTextArea);
         scrollPane.setPreferredSize(new Dimension(300, 100));

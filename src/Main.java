@@ -59,10 +59,10 @@ public class Main {
             frame.repaintMap();
             //adds buildings
             buildingPlacer.addBuildings(buildings, numberOfEngineers, colonyResources, startX, startY, map);
-            Astronaut astronaut = astronauts.get(0); // Assuming the first one is a Collector
+            Astronaut astronaut = astronauts.get(0);
             if (astronaut instanceof Collector) {
                 Collector collector = (Collector) astronaut;
-                collector.setPosition(new Position(10+i, 25+i)); // Set new position
+                collector.setPosition(new Position(10+i, 25+i));
                 collector.setHealth(collector.getHealth()-10);
                 if(collector.getHealth() <= 0){
                     collector.kill();
@@ -81,22 +81,18 @@ public class Main {
 
                 } else if (building instanceof SolarPanel solarPanel) {
                     System.out.println("This is a SolarPanel.");
-                    // Cast to SolarPanel to access SolarPanel-specific methods
                     solarPanel.dayCycle(colonyResources);
                     solarPanel.show();
                 } else if (building instanceof FusionReactor fusionReactor) {
                     System.out.println("This is a FusionReactor.");
-                    // Cast to FusionReactor to access FusionReactor-specific methods
                     fusionReactor.dayCycle(colonyResources);
                     fusionReactor.show();
                 } else if (building instanceof OxygenGenerator oxygenGenerator) {
                     System.out.println("This is an OxygenGenerator.");
-                    // Cast to OxygenGenerator to access OxygenGenerator-specific methods
                     oxygenGenerator.dayCycle(colonyResources);
                     oxygenGenerator.show();
                 } else if (building instanceof WaterPurifier waterPurifier) {
                     System.out.println("This is a WaterPurifier.");
-                    // Cast to WaterPurifier to access WaterPurifier-specific methods
                     waterPurifier.dayCycle(colonyResources);
                     waterPurifier.show();
                 }

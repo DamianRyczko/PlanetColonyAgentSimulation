@@ -10,17 +10,6 @@ public class SolarPanel extends Building{
         setPanelEffectiveness(1);
         setIsDirty(false);
     }
-
-
-//    public SolarPanel(int x, int y) {
-//        super("energy", x, y);
-//        setPanelEffectiveness(1);
-//        setProducedAmount(100);
-//        setProductionTime(2);
-//        setChanceOfMalfunction(0.01 + getRandom().nextDouble()/100);
-//        setTimeToCompleteProduction(getProductionTime());
-//    }
-
     @Override
     public void dayCycle(ColonyResources colonyResources){
         if (getRandom().nextDouble() < getChanceOfMalfunction()){
