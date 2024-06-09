@@ -62,7 +62,7 @@ public class Main {
             Astronaut astronaut = astronauts.get(0);
             if (astronaut instanceof Collector) {
                 Collector collector = (Collector) astronaut;
-                collector.setPosition(new Position(10+i, 25+i));
+                collector.setPosition(new Position(10+i, 10+i));
                 collector.setHealth(collector.getHealth()-10);
                 if(collector.getHealth() <= 0){
                     collector.kill();
@@ -97,6 +97,9 @@ public class Main {
                     waterPurifier.show();
                 }
             }
+            colonyResources.setOxygen(colonyResources.getOxygen()-20);
+            colonyResources.setWater(colonyResources.getWater()-20);
+            colonyResources.setFood(colonyResources.getFood()-40);
             try {
                 // Sleep for 1 second (1000 milliseconds)
                 Thread.sleep(100);
