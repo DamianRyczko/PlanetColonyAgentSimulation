@@ -40,6 +40,10 @@ public class AMap {
         return gridSizeY;
     }
 
+    public Position getGridSize(){
+        return new Position(gridSizeX, gridSizeY);
+    }
+
     public Field[][] getGrid() {
         return grid;
     }

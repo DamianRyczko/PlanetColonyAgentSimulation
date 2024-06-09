@@ -9,10 +9,10 @@ public class SimulationPanelDisplay extends JPanel {
     private final Map<Integer, ImageIcon> typeToIcon;
     private final Map<Integer, Color> astronautTypeToColor;
 
-    ArrayList<Object> buildings;
+    ArrayList<Building> buildings;
     ArrayList<Astronaut> astronauts;
 
-    public SimulationPanelDisplay(AMap map, ArrayList<Object> buildings, ArrayList<Astronaut> astronauts) {
+    public SimulationPanelDisplay(AMap map, ArrayList<Building> buildings, ArrayList<Astronaut> astronauts) {
         this.map = map;
         this.setBackground(new Color(0x262a2b));
         this.typeToIcon = new HashMap<>();

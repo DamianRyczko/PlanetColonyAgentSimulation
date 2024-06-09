@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Random;
 
 abstract class Astronaut {
@@ -8,6 +9,19 @@ abstract class Astronaut {
     private boolean alive = true;
     private boolean occupied;
     private int dailyDistance;
+    private boolean moveMade;
+    private int moveDone;
+
+    public Astronaut(int id, Position position, int dailyDistance) {
+
+        this.id = id;
+        health = 100;
+        this.position = position;
+        occupied = false;
+        moveMade = false;
+        this.dailyDistance = dailyDistance;
+        moveDone = 0;
+    }
 
 
     public int getId() {
@@ -63,6 +77,38 @@ abstract class Astronaut {
     public void setOccupied(boolean occupied) {
         this.occupied = occupied;
     }
+
+    public boolean isMoveMade() {
+        return moveMade;
+    }
+
+    public void setMoveMade(boolean moveMade) {
+        this.moveMade = moveMade;
+    }
+
+    public int getMoveDone() {
+        return moveDone;
+    }
+
+    public void setMoveDone(int moveDone) {
+        this.moveDone = moveDone;
+    }
+
+    public void reSetMoveDone() {
+        this.moveDone = 0;
+    }
+
+    public void moveTo (Position newPosition) {
+        moveDone += Position.manhattanDistance(position, newPosition);
+        if (moveDone > dailyDistance) {
+            FindPath.BFS(position,newPosition,GlobalVariables.GridSize,moveDone-dailyDistance);
+        }
+        if (moveMade){return;}
+        this.position = newPosition;
+        this.moveMade = true;
+    }
+
+    void dailyTask(ArrayList<Building> buildings, ArrayList<Astronaut> astronauts){};
 
     public void astronautConsumption(int minimumOxygenConsumption, int maximumOxygenConsumption,
                                      int minimumFoodConsumption, int maximumFoodConsumption,
