@@ -1,24 +1,18 @@
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Medic extends Astronaut {
     int healingPower;
 
     public Medic(Position position, int min_healing_power, int max_healing_power, int dailyDistance, int id) {
-        setHealth(100);
-        setPosition(position);
+        super(id, position, dailyDistance);
         setRandomHealingPower(min_healing_power, max_healing_power);
-        setDailyDistance(dailyDistance);
-        setId(id);
-        setOccupied(false);
     }
 
 
-    public Medic() {
-        setHealth(100);
-        setPosition(new Position(0,0));
+    public Medic(int id) {
+        super(id, new Position(0,0), 1000 );
         setRandomHealingPower(50, 50);
-        setDailyDistance(1000);
-        setOccupied(false);
     }
 
     void setHealingPower(int healingPower) {
@@ -37,6 +31,12 @@ public class Medic extends Astronaut {
         }
         else{
             patient.setHealth(100);
+            setOccupied(false);
         }
+    }
+
+   // @Override
+    public void dailyTask(ArrayList<Building> buildings, ArrayList<Astronaut> astronauts, AMap map){
+
     }
 }

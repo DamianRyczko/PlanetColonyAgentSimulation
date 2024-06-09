@@ -26,6 +26,10 @@ public class Position {
         this.y = y;
     }
 
+    static public int manhattanDistance (Position a , Position b) {
+        return Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
+    }
+
     // Metoda toString do reprezentacji tekstowej
     @Override
     public String toString() {

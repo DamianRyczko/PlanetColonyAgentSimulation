@@ -51,7 +51,7 @@ public class BuildingPlacer {
         return null; // Resource not found
     }
 
-    public void addBuildings( ArrayList<Object> buildings,
+    public void addBuildings( ArrayList<Building> buildings,
                              int numberOfEngineers,
                              ColonyResources colonyResources,
                              int startX,

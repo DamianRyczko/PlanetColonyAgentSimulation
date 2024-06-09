@@ -8,7 +8,7 @@ public class SimulationFrame extends JFrame {
 
     SimulationPanelLeft simulationPanelLeft;
     SimulationPanelDisplay simulationPanelDisplay;
-    public SimulationFrame(ColonyResources colonyResources, AMap map, ArrayList<Object> buildings,  ArrayList<Astronaut> astronauts){;
+    public SimulationFrame(ColonyResources colonyResources, AMap map, ArrayList<Building> buildings,  ArrayList<Astronaut> astronauts){;
         this.setTitle("Colony Simulation");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // exit out of application == stop simulation
         this.setResizable(true);

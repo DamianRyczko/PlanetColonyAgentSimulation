@@ -12,7 +12,7 @@ public class EventSimulator {
         this.simulationPanelLeft = simulationPanelLeft;
     }
 
-    public void generateEvent(ArrayList<Object> buildings) {
+    public void generateEvent(ArrayList<Building> buildings) {
         int event = getRandomEvent().drawEvent(3);
         switch (event) {
             case 0:
