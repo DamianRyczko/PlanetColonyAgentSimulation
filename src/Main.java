@@ -36,7 +36,7 @@ public class Main {
 
         int startX = 24;
         int startY = 24;
-        int numberOfEngineers = 20;
+        //int numberOfEngineers = 20;
 
         astronauts.add(new Collector(new Position(5,15),4,1,34, new Position(startX,startY)));
 
@@ -47,7 +47,19 @@ public class Main {
         astronauts.add(new Medic(new Position(42,49),40, 60, 2,6));
         astronauts.add(new Medic(new Position(16,32),40, 60, 2,7));
 
-        astronauts.add(new Collector(new Position(57, 42), 3, 8, 100, new Position(startX,startY)));
+        astronauts.add(new Collector(new Position(57, 47), 3, 8, 100, new Position(startX,startY)));
+        astronauts.add(new Collector(new Position(43, 26), 3, 8, 100, new Position(startX,startY)));
+        astronauts.add(new Collector(new Position(21, 32), 3, 8, 100, new Position(startX,startY)));
+        astronauts.add(new Collector(new Position(65, 45), 3, 8, 100, new Position(startX,startY)));
+        astronauts.add(new Collector(new Position(17, 16), 3, 8, 100, new Position(startX,startY)));
+        astronauts.add(new Collector(new Position(53, 21), 3, 8, 100, new Position(startX,startY)));
+
+
+        astronauts.add(new Engineer(9, 100, new Position(13, 21),10));
+        astronauts.add(new Engineer(10, 100, new Position(1, 21),10));
+        astronauts.add(new Engineer(11, 100, new Position(13, 21),10));
+        astronauts.add(new Engineer(12, 100, new Position(13, 21),10));
+
 
         astronauts.get(6).setHealth(10);
 
@@ -71,14 +83,14 @@ public class Main {
 
 
         for (int i = 0; i<100; i++) {
-            NewDay.nextDay(buildings, astronauts, map);
+            int numberOfEngineersfree = NewDay.nextDay(buildings, astronauts, colonyResources, map);
 
             frame.getSimulationPanelLeft().updateResources(colonyResources);
 
             eventSimulator.generateEvent(buildings);
             frame.repaintMap();
             //adds buildings
-//            buildingPlacer.addBuildings(buildings, numberOfEngineers, colonyResources, startX, startY, map);
+            buildingPlacer.addBuildings(buildings, numberOfEngineersfree, colonyResources, startX, startY, map);
 //            Astronaut astronaut = astronauts.get(0);
 //            if (astronaut instanceof Collector) {
 //                Collector collector = (Collector) astronaut;
@@ -97,24 +109,24 @@ public class Main {
                     //System.out.println("This is a Farm.");
                     // Cast to Farm to access Farm-specific methods
                     farm.dayCycle(colonyResources);
-                    farm.show();
+                    //farm.show();
 
                 } else if (building instanceof SolarPanel solarPanel) {
                     //System.out.println("This is a SolarPanel.");
                     solarPanel.dayCycle(colonyResources);
-                    solarPanel.show();
+                    //solarPanel.show();
                 } else if (building instanceof FusionReactor fusionReactor) {
                    // System.out.println("This is a FusionReactor.");
                     fusionReactor.dayCycle(colonyResources);
-                    fusionReactor.show();
+                    //fusionReactor.show();
                 } else if (building instanceof OxygenGenerator oxygenGenerator) {
                     //System.out.println("This is an OxygenGenerator.");
                     oxygenGenerator.dayCycle(colonyResources);
-                    oxygenGenerator.show();
+                    //oxygenGenerator.show();
                 } else if (building instanceof WaterPurifier waterPurifier) {
                     //System.out.println("This is a WaterPurifier.");
                     waterPurifier.dayCycle(colonyResources);
-                    waterPurifier.show();
+                    //waterPurifier.show();
                 }
             }
             try {

@@ -26,7 +26,7 @@ public class AMap {
                     i++;
                     chanceSum += chanceOfTypes.get(i);
                 }
-                System.out.println(i);
+                //System.out.println(i);
                 grid[x][y] = new Field(i ,chanceOfRich);
             }
         }

@@ -6,16 +6,23 @@ import static java.lang.Math.random;
 public class NewDay {
 
 
-    static public void nextDay(ArrayList<Building> buildings, ArrayList<Astronaut> astronauts, AMap map){
+    static public int nextDay(ArrayList<Building> buildings, ArrayList<Astronaut> astronauts, ColonyResources colonyResources, AMap map){
+        int numberOfEngineersfree = 0;
         resetAll(astronauts);
         assignMadic(astronauts,map);
+        assignCollectors(buildings, astronauts, colonyResources);
+        numberOfEngineersfree = assingEngineers(buildings, astronauts);
+        //randomMovs(astronauts, map);
 
-        randomMovs(astronauts, map);
 
+        return numberOfEngineersfree;
     }
 
     static void randomMovs(ArrayList<Astronaut> astronauts, AMap map){
         for(Astronaut astronaut : astronauts){
+            if (astronaut.isMoveMade()){
+                break;
+            }
             if (!astronaut.isOccupied()){
                 doRandomMove(astronaut, map);
             }
@@ -37,7 +44,6 @@ public class NewDay {
         position.setY(position.getY()+yMov);
         position = correctPosition(position, map);
         astronaut.moveTo(position);
-        System.out.println("okokokok");
     }
 
     static Position correctPosition(Position position, AMap map){
@@ -63,15 +69,15 @@ public class NewDay {
     static void resetAll(ArrayList<Astronaut> astronauts){
         for (Astronaut astronaut : astronauts) {
             astronaut.reSetMoveDone();
+            astronaut.setMoveMade(false);
             if (!astronaut.isAlive()){
                 astronauts.remove(astronaut);
                 break;
             }
             if (astronaut.getHealth() < 100){
-                astronaut.setOccupied(true);
                 break;
             }
-            astronaut.setMoveMade(false);
+
         }
     }
 
@@ -105,7 +111,7 @@ public class NewDay {
         }
         if (minimumDistance == 0){
             theMedic.heal(patient);
-            theMedic.setOccupied(true);
+            theMedic.setOccupied(false);
         }
         if (theMedic == null){}
         else{
@@ -114,4 +120,65 @@ public class NewDay {
         }
     }
 
+    static void assignCollectors(ArrayList<Building> buildings, ArrayList<Astronaut> astronauts, ColonyResources colonyResources){
+        for(Astronaut astronaut : astronauts){
+            if (astronaut.getHealth() < 100){
+                break;
+            }
+            if (astronaut instanceof Collector){
+                ((Collector) astronaut).dailyTask(buildings, astronauts, colonyResources);
+            }
+        }
+    }
+
+    static int assingEngineers(ArrayList<Building> buildings, ArrayList<Astronaut> astronauts){
+
+        for (Building building : buildings) {
+            if (isBuildingIsDamaged(building)){
+                findEngineerToRepair(building, astronauts);
+                System.out.println("okok");
+            }
+        }
+
+        int numberOfEngineersfree = 0;
+        for(Astronaut astronaut : astronauts){
+            if (astronaut instanceof Engineer){
+                if (astronaut.isfree()){
+                    numberOfEngineersfree++;
+                }
+            }
+        }
+        System.out.println("ilosc Engineers = "+numberOfEngineersfree);
+        return numberOfEngineersfree;
+    }
+
+    static boolean isBuildingIsDamaged(Building building){
+        if (building.getIsDamaged()){
+            return true;
+        }
+        if (building instanceof SolarPanel){
+            if (((SolarPanel) building).getDirty()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    static void findEngineerToRepair(Building building, ArrayList<Astronaut> astronauts){
+        Engineer theEngineer = null;
+        int minimumDistance = Integer.MAX_VALUE;
+        for (Astronaut astronaut : astronauts) {
+            if (astronaut instanceof Engineer){
+                if (!checkIfAvailable(astronaut)){break;}
+                if (minimumDistance > Position.manhattanDistance(astronaut.getPosition(),building.getPostion())){
+                    minimumDistance = Position.manhattanDistance(astronaut.getPosition(),building.getPostion());
+                    theEngineer = (Engineer) astronaut;
+                }
+            }
+        }
+        if (theEngineer != null) {
+            theEngineer.goToRepair(building);
+            System.out.println("super");
+        }
+    }
 }
