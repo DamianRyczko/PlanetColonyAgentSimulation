@@ -52,11 +52,11 @@ public class BuildingPlacer {
     }
 
     public void addBuildings( ArrayList<Building> buildings,
-                             int numberOfEngineers,
                              ColonyResources colonyResources,
                              int startX,
                              int startY,
-                             AMap map
+                             AMap map,
+                              ArrayList<Engineer> freeEngineers
     ) {
         if (!isCurrentlyBuilding()) {
             int water = colonyResources.getWater();
@@ -95,7 +95,20 @@ public class BuildingPlacer {
                 System.out.println("No available resource found for " + mostNeededResource);
             }
         }
-        setTimeToCompletion(getTimeToCompletion()-numberOfEngineers);
+        int numberOfEngineersAtLocation = 0;
+        for (Engineer engineer : freeEngineers) {
+            Position buildingPosition = new Position(buildingX, buildingY);
+            engineer.moveTo(buildingPosition);
+            if (engineer.getPosition() == buildingPosition) {
+                numberOfEngineersAtLocation++;
+            }
+        }
+
+        setTimeToCompletion(getTimeToCompletion()-numberOfEngineersAtLocation);
+        System.out.println(getTimeToCompletion());
+        if (getTimeToCompletion() == 0){
+            System.out.println("no co nie buduje");
+        }
 
         if (getTimeToCompletion() == 0){
             try {
@@ -149,6 +162,9 @@ public class BuildingPlacer {
 
     public void setTimeToCompletion(int timeToCompletion) {
         this.timeToCompletion = timeToCompletion;
+        if (this.timeToCompletion <= 0){
+            this.timeToCompletion = 0;
+        }
     }
 
     public int getMostNeededResource() {

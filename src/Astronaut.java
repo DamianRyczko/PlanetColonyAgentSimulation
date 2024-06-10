@@ -56,6 +56,7 @@ abstract class Astronaut {
         this.health = health;
         if (health <= 0) {
             health = 0;
+            alive = false;
         }
         if (health > 100) {
             health = 100;
@@ -99,14 +100,37 @@ abstract class Astronaut {
     }
 
     public void moveTo (Position newPosition) {
-        moveDone += Position.manhattanDistance(position, newPosition);
-        if (moveDone > dailyDistance) {
-            FindPath.BFS(position,newPosition,GlobalVariables.GridSize,moveDone-dailyDistance);
+        if (!isfree()){return;}
+        if (newPosition == position){return;}
+        int move = Position.manhattanDistance(position, newPosition);
+        if (moveDone+move > dailyDistance) {
+            this.position = FindPath.BFS(position,newPosition,GlobalVariables.GridSize,dailyDistance);
+            this.moveMade = true;
         }
-        if (moveMade){return;}
-        this.position = newPosition;
-        this.moveMade = true;
+        else {
+            moveDone += move;
+            this.position = newPosition;
+            this.moveMade = true;
+        }
+
     }
+
+    public boolean isfree(){
+        if (moveMade){return false;}
+        if (!alive){return false;}
+        if (health <= 0){return false;}
+        return true;
+    }
+
+    public boolean isfreeOrOccupide(){
+        if (moveMade){return false;}
+        if (occupied){return false;}
+        if (!alive){return false;}
+        if (health <= 0){return false;}
+        return true;
+    }
+
+
 
     void dailyTask(ArrayList<Building> buildings, ArrayList<Astronaut> astronauts){};
 
