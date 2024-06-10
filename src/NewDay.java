@@ -6,16 +6,17 @@ import static java.lang.Math.random;
 public class NewDay {
 
 
-    static public int nextDay(ArrayList<Building> buildings, ArrayList<Astronaut> astronauts, ColonyResources colonyResources, AMap map){
-        int numberOfEngineersfree = 0;
+    static public ArrayList<Engineer> nextDay(ArrayList<Building> buildings, ArrayList<Astronaut> astronauts, ColonyResources colonyResources, AMap map){
         resetAll(astronauts);
         assignMadic(astronauts,map);
         assignCollectors(buildings, astronauts, colonyResources);
-        numberOfEngineersfree = assingEngineers(buildings, astronauts);
-        //randomMovs(astronauts, map);
+        ArrayList<Engineer> freeEngineers = assingEngineers(buildings, astronauts);
 
 
-        return numberOfEngineersfree;
+
+        randomMovs(astronauts, map);
+
+        return freeEngineers;
     }
 
     static void randomMovs(ArrayList<Astronaut> astronauts, AMap map){
@@ -67,18 +68,24 @@ public class NewDay {
     }
 
     static void resetAll(ArrayList<Astronaut> astronauts){
+        ArrayList<Astronaut> astronautsToRemove = new ArrayList<>();
         for (Astronaut astronaut : astronauts) {
             astronaut.reSetMoveDone();
             astronaut.setMoveMade(false);
-            if (!astronaut.isAlive()){
-                astronauts.remove(astronaut);
-                break;
-            }
+            astronaut.setOccupied(false);
             if (astronaut.getHealth() < 100){
-                break;
+                astronaut.kill();
+            }
+            if (!astronaut.isAlive()){
+                astronautsToRemove.add(astronaut);
+                continue;
             }
 
         }
+        for (Astronaut astronaut : astronautsToRemove) {
+            astronauts.remove(astronaut);
+        }
+
     }
 
     static void assignMadic(ArrayList<Astronaut> astronauts, AMap map){
@@ -92,8 +99,7 @@ public class NewDay {
     static public boolean checkIfAvailable(Astronaut astronaut){
         if (astronaut.isOccupied()){return false;}
         if (astronaut.isMoveMade()){return false;}
-        if (astronaut.isAlive()){return true;}
-        return false;
+        return true;
     }
 
     static void findAndAssignMadic (Astronaut patient, ArrayList<Astronaut> astronauts, AMap map){
@@ -113,10 +119,9 @@ public class NewDay {
             theMedic.heal(patient);
             theMedic.setOccupied(false);
         }
-        if (theMedic == null){}
+        else if (theMedic == null){return;}
         else{
             theMedic.moveTo(FindPath.BFS(theMedic.getPosition(),position,map.getGridSize(),theMedic.getDailyDistance()));
-
         }
     }
 
@@ -131,25 +136,24 @@ public class NewDay {
         }
     }
 
-    static int assingEngineers(ArrayList<Building> buildings, ArrayList<Astronaut> astronauts){
+    static ArrayList<Engineer> assingEngineers(ArrayList<Building> buildings, ArrayList<Astronaut> astronauts){
 
         for (Building building : buildings) {
             if (isBuildingIsDamaged(building)){
                 findEngineerToRepair(building, astronauts);
-                System.out.println("okok");
+                //System.out.println("okok");
             }
         }
 
-        int numberOfEngineersfree = 0;
+        ArrayList<Engineer> freeEngineers = new ArrayList<>();
         for(Astronaut astronaut : astronauts){
             if (astronaut instanceof Engineer){
                 if (astronaut.isfree()){
-                    numberOfEngineersfree++;
+                    freeEngineers.add((Engineer) astronaut);
                 }
             }
         }
-        System.out.println("ilosc Engineers = "+numberOfEngineersfree);
-        return numberOfEngineersfree;
+        return freeEngineers;
     }
 
     static boolean isBuildingIsDamaged(Building building){
@@ -178,7 +182,7 @@ public class NewDay {
         }
         if (theEngineer != null) {
             theEngineer.goToRepair(building);
-            System.out.println("super");
+            //System.out.println("super");
         }
     }
 }

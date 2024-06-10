@@ -100,7 +100,8 @@ abstract class Astronaut {
     }
 
     public void moveTo (Position newPosition) {
-        if (isfree()){return;}
+        if (!isfree()){return;}
+        if (newPosition == position){return;}
         int move = Position.manhattanDistance(position, newPosition);
         if (moveDone+move > dailyDistance) {
             this.position = FindPath.BFS(position,newPosition,GlobalVariables.GridSize,dailyDistance);

@@ -83,14 +83,15 @@ public class Main {
 
 
         for (int i = 0; i<100; i++) {
-            int numberOfEngineersfree = NewDay.nextDay(buildings, astronauts, colonyResources, map);
+            System.out.println(i+" dzien symulacji");
+            ArrayList<Engineer> freeEngineers = NewDay.nextDay(buildings, astronauts, colonyResources, map);
 
             frame.getSimulationPanelLeft().updateResources(colonyResources);
 
             eventSimulator.generateEvent(buildings);
             frame.repaintMap();
             //adds buildings
-            buildingPlacer.addBuildings(buildings, numberOfEngineersfree, colonyResources, startX, startY, map);
+            buildingPlacer.addBuildings(buildings, colonyResources, startX, startY, map, freeEngineers);
 //            Astronaut astronaut = astronauts.get(0);
 //            if (astronaut instanceof Collector) {
 //                Collector collector = (Collector) astronaut;
@@ -101,7 +102,7 @@ public class Main {
 //                }
 //            }
             frame.repaintMap();
-
+            System.out.println("budynki "+buildings.size()+" astronalci "+astronauts.size());
             //cycles all buildings
             for (Object building : buildings) {
                 //System.out.println("+++++++++++++++++++++++++++++");
@@ -131,7 +132,7 @@ public class Main {
             }
             try {
                 // Sleep for 1 second (1000 milliseconds)
-                Thread.sleep(400);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
