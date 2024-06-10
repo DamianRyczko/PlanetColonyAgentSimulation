@@ -130,6 +130,9 @@ public class Main {
                     //waterPurifier.show();
                 }
             }
+            colonyResources.setOxygen(colonyResources.getOxygen()-20);
+            colonyResources.setWater(colonyResources.getWater()-20);
+            colonyResources.setFood(colonyResources.getFood()-40);
             try {
                 // Sleep for 1 second (1000 milliseconds)
                 Thread.sleep(100);
