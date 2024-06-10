@@ -5,6 +5,12 @@ import static java.lang.Math.random;
 
 public class NewDay {
 
+    public class BuildingAndAstronaut{
+        Building building;
+        Astronaut astronaut;
+    }
+
+    ArrayList<BuildingAndAstronaut> BuildingsAndAstronauts;
 
     static public ArrayList<Engineer> nextDay(ArrayList<Building> buildings, ArrayList<Astronaut> astronauts, ColonyResources colonyResources, AMap map){
         resetAll(astronauts);
@@ -122,6 +128,11 @@ public class NewDay {
     }
 
     static void assignCollectors(ArrayList<Building> buildings, ArrayList<Astronaut> astronauts, ColonyResources colonyResources){
+        for (Building building : buildings) {
+            //building
+        }
+
+
         for(Astronaut astronaut : astronauts){
             if (astronaut.getHealth() < 100){
                 break;

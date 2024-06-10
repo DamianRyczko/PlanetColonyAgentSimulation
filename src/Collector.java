@@ -16,6 +16,7 @@ public class Collector extends Astronaut {
         super(id, position, dailyDistance);
         this.carryingCapacity = carryingCapacity;
         this.basePosition = basePosition;
+        this.goal = null;
     }
 
     public void collect (ArrayList<Building> buildings){
