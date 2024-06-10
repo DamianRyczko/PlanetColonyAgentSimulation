@@ -12,8 +12,6 @@ public class NewDay {
         assignCollectors(buildings, astronauts, colonyResources);
         ArrayList<Engineer> freeEngineers = assingEngineers(buildings, astronauts);
 
-
-
         randomMovs(astronauts, map);
 
         return freeEngineers;
@@ -24,9 +22,7 @@ public class NewDay {
             if (astronaut.isMoveMade()){
                 break;
             }
-            if (!astronaut.isOccupied()){
-                doRandomMove(astronaut, map);
-            }
+            doRandomMove(astronaut, map);
         }
     }
 
@@ -72,7 +68,7 @@ public class NewDay {
         for (Astronaut astronaut : astronauts) {
             astronaut.reSetMoveDone();
             astronaut.setMoveMade(false);
-            astronaut.setOccupied(false);
+            //astronaut.setOccupied(false);
             if (astronaut.getHealth() < 0){
                 astronaut.kill();
             }
@@ -97,7 +93,7 @@ public class NewDay {
     }
 
     static public boolean checkIfAvailable(Astronaut astronaut){
-        if (astronaut.isOccupied()){return false;}
+        //if (astronaut.isOccupied()){return false;}
         if (astronaut.isMoveMade()){return false;}
         return true;
     }
@@ -130,18 +126,31 @@ public class NewDay {
             if (astronaut.getHealth() < 100){
                 break;
             }
-            if (astronaut instanceof Collector){
-                ((Collector) astronaut).dailyTask(buildings, astronauts, colonyResources);
+            if (astronaut instanceof Collector collector){
+                //for (Astronaut astronaut : astronauts) {
+                    if (collector.getGoal() != null) {
+                        collector.goalCollecting(buildings, colonyResources);
+                    } else {
+                        collector.findGoal(buildings);
+                    }
+                //}
             }
         }
     }
 
     static ArrayList<Engineer> assingEngineers(ArrayList<Building> buildings, ArrayList<Astronaut> astronauts){
+//        for (Astronaut astronaut : astronauts) {
+//            if (astronaut instanceof Engineer){
+//                if (astronaut.isOccupied()){
+//                    ((Engineer) astronaut).goToRepair();
+//                }
+//            }
+//        }
 
         for (Building building : buildings) {
             if (isBuildingIsDamaged(building)){
                 findEngineerToRepair(building, astronauts);
-                //System.out.println("okok");
+                System.out.println("okok");
             }
         }
 

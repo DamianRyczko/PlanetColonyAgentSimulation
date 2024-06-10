@@ -8,6 +8,10 @@ public class Collector extends Astronaut {
     private final Position basePosition;
     private int resourceInBackpack;
 
+    public Position getGoal (){
+        return goal;
+    }
+
     public Collector(Position position, int dailyDistance, int id, int carryingCapacity, Position basePosition) {
         super(id, position, dailyDistance);
         this.carryingCapacity = carryingCapacity;
@@ -21,7 +25,7 @@ public class Collector extends Astronaut {
         findGoal(buildings);
     }
 
-    private void findGoal(ArrayList<Building> buildings){
+    public void findGoal(ArrayList<Building> buildings){
         if (buildings.isEmpty()){
             return;
         }
@@ -34,7 +38,7 @@ public class Collector extends Astronaut {
             }
         }
         goal = positionToCollect;
-        setOccupied(true);
+        //setOccupied(true);
     }
 
     void goalCollecting(ArrayList<Building> buildings, ColonyResources colonyResources){
@@ -62,6 +66,7 @@ public class Collector extends Astronaut {
             }
             else{
                 fillColonyResources(colonyResources);
+                goal = null;
             }
 
         }
@@ -99,16 +104,6 @@ public class Collector extends Astronaut {
         resource = "";
         idResource = 0;
         super.setOccupied(false);
-    }
-
-    //@Override
-    void dailyTask(ArrayList<Building> buildings, ArrayList<Astronaut> astronauts, ColonyResources colonyResources){
-        if (isOccupied()){
-            goalCollecting(buildings, colonyResources);
-        }
-        else{
-            findGoal(buildings);
-        }
     }
 
 

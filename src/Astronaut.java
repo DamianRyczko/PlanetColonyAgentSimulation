@@ -54,12 +54,12 @@ abstract class Astronaut {
 
     public void setHealth(int health) {
         this.health = health;
-        if (health <= 0) {
-            health = 0;
+        if (this.health <= 0) {
+            this.health = 0;
             alive = false;
         }
-        if (health > 100) {
-            health = 100;
+        if (this.health > 100) {
+            this.health = 100;
         }
     }
 
