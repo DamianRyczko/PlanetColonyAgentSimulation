@@ -8,7 +8,7 @@ public class NewDay {
 
     static public ArrayList<Engineer> nextDay(ArrayList<Building> buildings, ArrayList<Astronaut> astronauts, ColonyResources colonyResources, AMap map){
         resetAll(astronauts);
-        assignMadic(astronauts,map);
+        assignMadic(astronauts);
         assignCollectors(buildings, astronauts, colonyResources);
         ArrayList<Engineer> freeEngineers = assingEngineers(buildings, astronauts);
 
@@ -73,7 +73,7 @@ public class NewDay {
             astronaut.reSetMoveDone();
             astronaut.setMoveMade(false);
             astronaut.setOccupied(false);
-            if (astronaut.getHealth() < 100){
+            if (astronaut.getHealth() < 0){
                 astronaut.kill();
             }
             if (!astronaut.isAlive()){
@@ -88,10 +88,10 @@ public class NewDay {
 
     }
 
-    static void assignMadic(ArrayList<Astronaut> astronauts, AMap map){
+    static void assignMadic(ArrayList<Astronaut> astronauts){
         for(Astronaut astronaut : astronauts){
             if (astronaut.getHealth() < 100){
-                findAndAssignMadic(astronaut, astronauts, map);
+                findAndAssignMadic(astronaut, astronauts);
             }
         }
     }
@@ -102,7 +102,7 @@ public class NewDay {
         return true;
     }
 
-    static void findAndAssignMadic (Astronaut patient, ArrayList<Astronaut> astronauts, AMap map){
+    static void findAndAssignMadic (Astronaut patient, ArrayList<Astronaut> astronauts){
         Position position = patient.getPosition();
         int minimumDistance = Integer.MAX_VALUE;
         Medic theMedic = null;
@@ -121,7 +121,7 @@ public class NewDay {
         }
         else if (theMedic == null){return;}
         else{
-            theMedic.moveTo(FindPath.BFS(theMedic.getPosition(),position,map.getGridSize(),theMedic.getDailyDistance()));
+            theMedic.moveTo(FindPath.BFS(theMedic.getPosition(),position,GlobalVariables.GridSize,theMedic.getDailyDistance()));
         }
     }
 
