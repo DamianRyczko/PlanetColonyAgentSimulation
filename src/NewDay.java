@@ -5,17 +5,10 @@ import static java.lang.Math.random;
 
 public class NewDay {
 
-    public class BuildingAndAstronaut{
-        Building building;
-        Astronaut astronaut;
-    }
-
-    ArrayList<BuildingAndAstronaut> BuildingsAndAstronauts;
-
     static public ArrayList<Engineer> nextDay(ArrayList<Building> buildings, ArrayList<Astronaut> astronauts, ColonyResources colonyResources, AMap map){
+        unloadBuildings(buildings, colonyResources);
         resetAll(astronauts);
         assignMadic(astronauts);
-        assignCollectors(buildings, astronauts, colonyResources);
         ArrayList<Engineer> freeEngineers = assingEngineers(buildings, astronauts);
 
         randomMovs(astronauts, map);
@@ -99,9 +92,7 @@ public class NewDay {
     }
 
     static public boolean checkIfAvailable(Astronaut astronaut){
-        //if (astronaut.isOccupied()){return false;}
-        if (astronaut.isMoveMade()){return false;}
-        return true;
+        return !astronaut.isMoveMade();
     }
 
     static void findAndAssignMadic (Astronaut patient, ArrayList<Astronaut> astronauts){
@@ -124,28 +115,6 @@ public class NewDay {
         else if (theMedic == null){return;}
         else{
             theMedic.moveTo(FindPath.BFS(theMedic.getPosition(),position,GlobalVariables.GridSize,theMedic.getDailyDistance()));
-        }
-    }
-
-    static void assignCollectors(ArrayList<Building> buildings, ArrayList<Astronaut> astronauts, ColonyResources colonyResources){
-        for (Building building : buildings) {
-            //building
-        }
-
-
-        for(Astronaut astronaut : astronauts){
-            if (astronaut.getHealth() < 100){
-                break;
-            }
-            if (astronaut instanceof Collector collector){
-                //for (Astronaut astronaut : astronauts) {
-                    if (collector.getGoal() != null) {
-                        collector.goalCollecting(buildings, colonyResources);
-                    } else {
-                        collector.findGoal(buildings);
-                    }
-                //}
-            }
         }
     }
 
@@ -200,9 +169,37 @@ public class NewDay {
                 }
             }
         }
+        int t = 9;
         if (theEngineer != null) {
             theEngineer.goToRepair(building);
             //System.out.println("super");
+        }
+    }
+
+    static void unloadBuildings(ArrayList<Building> buildings, ColonyResources colonyResources){
+        for (Building building : buildings) {
+            int amount = building.getResourceWaitingForCollection();
+            String resource = building.getProducedResource();
+            if (resource.equals("food")) {
+                colonyResources.setFood(colonyResources.getFood() + amount);
+                building.setResourceWaitingForCollection(0);
+                continue;
+            }
+            if (resource.equals("water")) {
+                colonyResources.setWater(colonyResources.getWater() + amount);
+                building.setResourceWaitingForCollection(0);
+                continue;
+            }
+            if (resource.equals("oxygen")) {
+                colonyResources.setOxygen(colonyResources.getOxygen() + amount);
+                building.setResourceWaitingForCollection(0);
+                continue;
+            }
+            if (resource.equals("electricity")) {
+                colonyResources.setElectricity(colonyResources.getElectricity() + amount);
+                building.setResourceWaitingForCollection(0);
+                continue;
+            }
         }
     }
 }

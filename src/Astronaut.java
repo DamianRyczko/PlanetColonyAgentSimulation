@@ -7,7 +7,6 @@ abstract class Astronaut {
     private int health;
     private Position position;
     private boolean alive = true;
-    private boolean occupied;
     private int dailyDistance;
     private boolean moveMade;
     private int moveDone;
@@ -17,7 +16,6 @@ abstract class Astronaut {
         this.id = id;
         health = 100;
         this.position = position;
-        occupied = false;
         moveMade = false;
         this.dailyDistance = dailyDistance;
         moveDone = 0;
@@ -38,10 +36,6 @@ abstract class Astronaut {
 
     public boolean isAlive() {
         return alive;
-    }
-
-    public boolean isOccupied() {
-        return occupied;
     }
 
     public int getDailyDistance() {
@@ -73,10 +67,6 @@ abstract class Astronaut {
 
     public void kill() {
         this.alive = false;
-    }
-
-    public void setOccupied(boolean occupied) {
-        this.occupied = occupied;
     }
 
     public boolean isMoveMade() {
@@ -124,7 +114,6 @@ abstract class Astronaut {
 
     public boolean isfreeOrOccupide(){
         if (moveMade){return false;}
-        if (occupied){return false;}
         if (!alive){return false;}
         if (health <= 0){return false;}
         return true;

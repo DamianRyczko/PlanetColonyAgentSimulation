@@ -1,9 +1,6 @@
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.io.File;
-import java.util.Map;
-import java.util.Scanner;
 import java.io.FileNotFoundException;
 
 
@@ -23,8 +20,10 @@ public class Main {
 
         var buildingPlacer = new BuildingPlacer();
 
+        int gridX = 30;
+        int gridY = 30;
 
-        AMap map = new AMap(70, 50, 20);
+        AMap map = new AMap(gridX, gridY, 20);
         GlobalVariables.GridSizeX = map.getGridSizeX();
         GlobalVariables.GridSizeY = map.getGridSizeY();
         GlobalVariables.GridSize = map.getGridSize();
@@ -38,30 +37,20 @@ public class Main {
         int startY = 24;
         //int numberOfEngineers = 20;
 
-        astronauts.add(new Collector(new Position(5,15),4,1,34, new Position(startX,startY)));
 
 
-        astronauts.add(new Medic(new Position(3,5),40, 60, 2,3));
-        astronauts.add(new Medic(new Position(34,10),40, 60, 2,4));
-        astronauts.add(new Medic(new Position(12,23),40, 60, 2,5));
-        astronauts.add(new Medic(new Position(42,49),40, 60, 2,6));
-        astronauts.add(new Medic(new Position(16,32),40, 60, 2,7));
+        astronauts.add(new Medic(new Position(3,5),40, 60, 4,0));
+        astronauts.add(new Medic(new Position(26,12),40, 60, 4,1));
 
-        astronauts.add(new Collector(new Position(57, 47), 3, 8, 100, new Position(startX,startY)));
-        astronauts.add(new Collector(new Position(43, 26), 3, 8, 100, new Position(startX,startY)));
-        astronauts.add(new Collector(new Position(21, 32), 3, 8, 100, new Position(startX,startY)));
-        astronauts.add(new Collector(new Position(65, 45), 3, 8, 100, new Position(startX,startY)));
-        astronauts.add(new Collector(new Position(17, 16), 3, 8, 100, new Position(startX,startY)));
-        astronauts.add(new Collector(new Position(53, 21), 3, 8, 100, new Position(startX,startY)));
+        Random rand = new Random();
+        for (int i = 0; i < 10;i++){
+            astronauts.add(new Engineer(astronauts.size() + i, 100, new Position(rand.nextInt(gridX), rand.nextInt(gridY)),2));
+        }
+//        astronauts.add(new Engineer(9, 100, new Position(13, 21),10));
+//        astronauts.add(new Engineer(10, 100, new Position(1, 21),10));
+//        astronauts.add(new Engineer(11, 100, new Position(34, 13),10));
+//        astronauts.add(new Engineer(12, 100, new Position(28, 56),10));
 
-
-        astronauts.add(new Engineer(9, 100, new Position(13, 21),10));
-        astronauts.add(new Engineer(10, 100, new Position(1, 21),10));
-        astronauts.add(new Engineer(11, 100, new Position(13, 21),10));
-        astronauts.add(new Engineer(12, 100, new Position(13, 21),10));
-
-
-        astronauts.get(6).setHealth(10);
 
         try {
             Map<String, Map<String, String>> config = ConfigLoader.loadConfig("src/config.txt");
@@ -82,7 +71,7 @@ public class Main {
 
 
 
-        for (int i = 0; i<100; i++) {
+        for (int i = 0; i<10000; i++) {
             System.out.println(i+" dzien symulacji");
             ArrayList<Engineer> freeEngineers = NewDay.nextDay(buildings, astronauts, colonyResources, map);
 
@@ -92,15 +81,7 @@ public class Main {
             frame.repaintMap();
             //adds buildings
             buildingPlacer.addBuildings(buildings, colonyResources, startX, startY, map, freeEngineers);
-//            Astronaut astronaut = astronauts.get(0);
-//            if (astronaut instanceof Collector) {
-//                Collector collector = (Collector) astronaut;
-//                collector.setPosition(new Position(10+i, 25+i));
-//                collector.setHealth(collector.getHealth()-10);
-//                if(collector.getHealth() <= 0){
-//                    collector.kill();
-//                }
-//            }
+
             frame.repaintMap();
             System.out.println("budynki "+buildings.size()+" astronalci "+astronauts.size());
             //cycles all buildings
@@ -130,9 +111,9 @@ public class Main {
                     //waterPurifier.show();
                 }
             }
-            colonyResources.setOxygen(colonyResources.getOxygen()-20);
-            colonyResources.setWater(colonyResources.getWater()-20);
-            colonyResources.setFood(colonyResources.getFood()-40);
+//            colonyResources.setOxygen(colonyResources.getOxygen()-20);
+//            colonyResources.setWater(colonyResources.getWater()-20);
+//            colonyResources.setFood(colonyResources.getFood()-40);
             try {
                 // Sleep for 1 second (1000 milliseconds)
                 Thread.sleep(100);

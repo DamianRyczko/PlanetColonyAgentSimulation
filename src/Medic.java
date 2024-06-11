@@ -31,7 +31,6 @@ public class Medic extends Astronaut {
         }
         else{
             patient.setHealth(100);
-            setOccupied(false);
         }
     }
 

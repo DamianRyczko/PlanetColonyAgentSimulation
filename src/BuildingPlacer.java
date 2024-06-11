@@ -83,6 +83,8 @@ public class BuildingPlacer {
                 setMostNeededResource(4);
             }
 
+            //System.out.println(smallest);
+
             setTimeToCompletion(getDaysToCompleteBuilding());
 
             int[] coordinates = findClosestResource(startX, startY, mostNeededResource, map);
@@ -106,9 +108,6 @@ public class BuildingPlacer {
 
         setTimeToCompletion(getTimeToCompletion()-numberOfEngineersAtLocation);
         System.out.println(getTimeToCompletion());
-        if (getTimeToCompletion() == 0){
-            System.out.println("no co nie buduje");
-        }
 
         if (getTimeToCompletion() == 0){
             try {
