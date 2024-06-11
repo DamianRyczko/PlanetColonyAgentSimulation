@@ -11,7 +11,7 @@ public class EventRandomizer extends Main implements EventInterface {
     }
     @Override
     public int drawEvent(int numberOfEvents) {
-        if(getRandom().nextDouble() < getChanceOfRandomEvent() + (getDaysSinceLastEvent() * 0.02)) {
+        if(getRandom().nextDouble() < getChanceOfRandomEvent() + (getDaysSinceLastEvent() * 0.07)) {
             setDaysSinceLastEvent(0);
             return random.nextInt(numberOfEvents)+1;
         }
