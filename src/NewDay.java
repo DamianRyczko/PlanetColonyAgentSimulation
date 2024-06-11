@@ -5,16 +5,14 @@ import static java.lang.Math.random;
 
 public class NewDay {
 
-
     static public ArrayList<Engineer> nextDay(ArrayList<Building> buildings, ArrayList<Astronaut> astronauts, ColonyResources colonyResources, AMap map){
+        unloadBuildings(buildings, colonyResources);
         resetAll(astronauts);
-        assignMadic(astronauts,map);
-        assignCollectors(buildings, astronauts, colonyResources);
+        assignMadic(astronauts);
         ArrayList<Engineer> freeEngineers = assingEngineers(buildings, astronauts);
 
-
-
         randomMovs(astronauts, map);
+        eating(astronauts,colonyResources);
 
         return freeEngineers;
     }
@@ -24,9 +22,7 @@ public class NewDay {
             if (astronaut.isMoveMade()){
                 break;
             }
-            if (!astronaut.isOccupied()){
-                doRandomMove(astronaut, map);
-            }
+            doRandomMove(astronaut, map);
         }
     }
 
@@ -72,8 +68,8 @@ public class NewDay {
         for (Astronaut astronaut : astronauts) {
             astronaut.reSetMoveDone();
             astronaut.setMoveMade(false);
-            astronaut.setOccupied(false);
-            if (astronaut.getHealth() < 100){
+            //astronaut.setOccupied(false);
+            if (astronaut.getHealth() < 0){
                 astronaut.kill();
             }
             if (!astronaut.isAlive()){
@@ -88,21 +84,19 @@ public class NewDay {
 
     }
 
-    static void assignMadic(ArrayList<Astronaut> astronauts, AMap map){
+    static void assignMadic(ArrayList<Astronaut> astronauts){
         for(Astronaut astronaut : astronauts){
             if (astronaut.getHealth() < 100){
-                findAndAssignMadic(astronaut, astronauts, map);
+                findAndAssignMadic(astronaut, astronauts);
             }
         }
     }
 
     static public boolean checkIfAvailable(Astronaut astronaut){
-        if (astronaut.isOccupied()){return false;}
-        if (astronaut.isMoveMade()){return false;}
-        return true;
+        return !astronaut.isMoveMade();
     }
 
-    static void findAndAssignMadic (Astronaut patient, ArrayList<Astronaut> astronauts, AMap map){
+    static void findAndAssignMadic (Astronaut patient, ArrayList<Astronaut> astronauts){
         Position position = patient.getPosition();
         int minimumDistance = Integer.MAX_VALUE;
         Medic theMedic = null;
@@ -117,22 +111,10 @@ public class NewDay {
         }
         if (minimumDistance == 0){
             theMedic.heal(patient);
-            theMedic.setOccupied(false);
         }
         else if (theMedic == null){return;}
         else{
-            theMedic.moveTo(FindPath.BFS(theMedic.getPosition(),position,map.getGridSize(),theMedic.getDailyDistance()));
-        }
-    }
-
-    static void assignCollectors(ArrayList<Building> buildings, ArrayList<Astronaut> astronauts, ColonyResources colonyResources){
-        for(Astronaut astronaut : astronauts){
-            if (astronaut.getHealth() < 100){
-                break;
-            }
-            if (astronaut instanceof Collector){
-                ((Collector) astronaut).dailyTask(buildings, astronauts, colonyResources);
-            }
+            theMedic.moveTo(FindPath.BFS(theMedic.getPosition(),position,GlobalVariables.GridSize,theMedic.getDailyDistance()));
         }
     }
 
@@ -173,7 +155,8 @@ public class NewDay {
         int minimumDistance = Integer.MAX_VALUE;
         for (Astronaut astronaut : astronauts) {
             if (astronaut instanceof Engineer){
-                if (!checkIfAvailable(astronaut)){break;}
+                if (astronaut.isMoveMade()){continue;}
+                if (astronaut.getHealth() != 100){continue;}
                 if (minimumDistance > Position.manhattanDistance(astronaut.getPosition(),building.getPostion())){
                     minimumDistance = Position.manhattanDistance(astronaut.getPosition(),building.getPostion());
                     theEngineer = (Engineer) astronaut;
@@ -183,6 +166,52 @@ public class NewDay {
         if (theEngineer != null) {
             theEngineer.goToRepair(building);
             //System.out.println("super");
+        }
+    }
+
+    static void unloadBuildings(ArrayList<Building> buildings, ColonyResources colonyResources){
+        for (Building building : buildings) {
+            int amount = building.getResourceWaitingForCollection();
+            String resource = building.getProducedResource();
+            if (resource.equals("food")) {
+                colonyResources.setFood(colonyResources.getFood() + amount);
+                building.setResourceWaitingForCollection(0);
+                continue;
+            }
+            if (resource.equals("water")) {
+                colonyResources.setWater(colonyResources.getWater() + amount);
+                building.setResourceWaitingForCollection(0);
+                continue;
+            }
+            if (resource.equals("oxygen")) {
+                colonyResources.setOxygen(colonyResources.getOxygen() + amount);
+                building.setResourceWaitingForCollection(0);
+                continue;
+            }
+            if (resource.equals("electricity")) {
+                colonyResources.setElectricity(colonyResources.getElectricity() + amount);
+                building.setResourceWaitingForCollection(0);
+                continue;
+            }
+        }
+    }
+
+    static void eating(ArrayList<Astronaut> astronauts, ColonyResources colonyResources){
+        int dailyFoodConsumption = 1;
+        int dailyOxygenConsumption = 1;
+        for (Astronaut astronaut : astronauts) {
+            if (colonyResources.getFood() < dailyFoodConsumption){
+                astronaut.setHealth(astronaut.getHealth() - 20);
+            }
+            else{
+                colonyResources.setFood(colonyResources.getFood() - dailyFoodConsumption);
+            }
+            if (colonyResources.getOxygen() < dailyOxygenConsumption){
+                astronaut.setHealth(astronaut.getHealth() - 20);
+            }
+            else{
+                colonyResources.setOxygen(colonyResources.getOxygen() - dailyOxygenConsumption);
+            }
         }
     }
 }

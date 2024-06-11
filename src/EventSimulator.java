@@ -1,7 +1,7 @@
 import java.util.Random;
 import java.util.ArrayList;
 
-public class EventSimulator {
+public abstract class EventSimulator extends Main implements EventInterface {
     private EventInterface randomEvent;
     private Random random;
     private SimulationPanelLeft simulationPanelLeft;
@@ -56,7 +56,7 @@ public class EventSimulator {
                 break;
             case 3:
                 simulationPanelLeft.appendEventMessage("Event 'Famine'");
-                colonyResources.setFood((int) (colonyResources.getFood()*7/100));
+                colonyResources.setFood((int) (colonyResources.getFood()*0.85));
                 break;
         }
     }

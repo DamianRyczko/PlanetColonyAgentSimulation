@@ -1,4 +1,4 @@
-public class ColonyResources {
+public class ColonyResources extends Main {
     private int food;
     private int water;
     private int oxygen;

@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class AMap {
+public class AMap extends Main {
     private final int gridSizeX;
     private final int gridSizeY;
     private Field[][] grid;

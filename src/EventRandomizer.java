@@ -1,5 +1,5 @@
 import java.util.Random;
-public class EventRandomizer implements EventInterface {
+public class EventRandomizer extends Main implements EventInterface {
     private Random random;
     private int daysSinceLastEvent;
     private double chanceOfRandomEvent; // 0 for 0% and 1 for 100%

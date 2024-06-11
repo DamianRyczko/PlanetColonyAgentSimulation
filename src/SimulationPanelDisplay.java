@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SimulationPanelDisplay extends JPanel {
+public class SimulationPanelDisplay extends SimulationFrame {
     private final AMap map;
     private final Map<Integer, ImageIcon> typeToIcon;
     private final Map<Integer, Color> astronautTypeToColor;
@@ -127,12 +127,7 @@ public class SimulationPanelDisplay extends JPanel {
             int x = astronaut.getPosition().getX();
             int y = astronaut.getPosition().getY();
             int type= 0;
-            if(astronaut instanceof Collector collector) {
-                type = 1;
-                if (!collector.isAlive()){
-                    type = 4;
-                }
-            } else if (astronaut instanceof Medic medic) {
+            if (astronaut instanceof Medic medic) {
                 type = 2;
                 if (!medic.isAlive()){
                     type = 4;

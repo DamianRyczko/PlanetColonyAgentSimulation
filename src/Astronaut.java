@@ -2,12 +2,11 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-abstract class Astronaut {
+abstract class Astronaut extends Main {
     private int id;
     private int health;
     private Position position;
     private boolean alive = true;
-    private boolean occupied;
     private int dailyDistance;
     private boolean moveMade;
     private int moveDone;
@@ -17,7 +16,6 @@ abstract class Astronaut {
         this.id = id;
         health = 100;
         this.position = position;
-        occupied = false;
         moveMade = false;
         this.dailyDistance = dailyDistance;
         moveDone = 0;
@@ -40,10 +38,6 @@ abstract class Astronaut {
         return alive;
     }
 
-    public boolean isOccupied() {
-        return occupied;
-    }
-
     public int getDailyDistance() {
         return dailyDistance;
     }
@@ -54,12 +48,12 @@ abstract class Astronaut {
 
     public void setHealth(int health) {
         this.health = health;
-        if (health <= 0) {
-            health = 0;
+        if (this.health <= 0) {
+            this.health = 0;
             alive = false;
         }
-        if (health > 100) {
-            health = 100;
+        if (this.health > 100) {
+            this.health = 100;
         }
     }
 
@@ -73,10 +67,6 @@ abstract class Astronaut {
 
     public void kill() {
         this.alive = false;
-    }
-
-    public void setOccupied(boolean occupied) {
-        this.occupied = occupied;
     }
 
     public boolean isMoveMade() {
@@ -118,13 +108,12 @@ abstract class Astronaut {
     public boolean isfree(){
         if (moveMade){return false;}
         if (!alive){return false;}
-        if (health <= 0){return false;}
+        if (health < 100){return false;}
         return true;
     }
 
     public boolean isfreeOrOccupide(){
         if (moveMade){return false;}
-        if (occupied){return false;}
         if (!alive){return false;}
         if (health <= 0){return false;}
         return true;
@@ -132,16 +121,16 @@ abstract class Astronaut {
 
 
 
-    void dailyTask(ArrayList<Building> buildings, ArrayList<Astronaut> astronauts){};
-
-    public void astronautConsumption(int minimumOxygenConsumption, int maximumOxygenConsumption,
-                                     int minimumFoodConsumption, int maximumFoodConsumption,
-                                     int minimumWaterConsumption, int maximumWaterConsumption,
-                                     ColonyResources colonyResources){
-        Random random = new Random();
-        colonyResources.subtractOxygen(minimumOxygenConsumption + random.nextInt(maximumOxygenConsumption - minimumOxygenConsumption));
-        colonyResources.subtractFood(minimumFoodConsumption + random.nextInt(maximumFoodConsumption - minimumFoodConsumption));
-        colonyResources.subtractWater(minimumWaterConsumption + random.nextInt(maximumWaterConsumption - minimumWaterConsumption));
-    }
+//    void dailyTask(ArrayList<Building> buildings, ArrayList<Astronaut> astronauts){};
+//
+//    public void astronautConsumption(int minimumOxygenConsumption, int maximumOxygenConsumption,
+//                                     int minimumFoodConsumption, int maximumFoodConsumption,
+//                                     int minimumWaterConsumption, int maximumWaterConsumption,
+//                                     ColonyResources colonyResources){
+//        Random random = new Random();
+//        colonyResources.subtractOxygen(minimumOxygenConsumption + random.nextInt(maximumOxygenConsumption - minimumOxygenConsumption));
+//        colonyResources.subtractFood(minimumFoodConsumption + random.nextInt(maximumFoodConsumption - minimumFoodConsumption));
+//        colonyResources.subtractWater(minimumWaterConsumption + random.nextInt(maximumWaterConsumption - minimumWaterConsumption));
+//    }
 
 }

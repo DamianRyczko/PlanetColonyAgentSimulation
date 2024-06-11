@@ -21,9 +21,9 @@ public class Engineer extends Astronaut{
     }
 
     public void changeHealth (){
-        int chanceOfGettingHurt = 20;
+        int chanceOfGettingHurt = 10;
         int minimalWound = 10;
-        int maximalWound = 50;
+        int maximalWound = 20;
         Random rand = new Random();
         if (rand.nextInt(100) < chanceOfGettingHurt){
             setHealth(getHealth() - (rand.nextInt(maximalWound - minimalWound) + minimalWound));
@@ -33,11 +33,9 @@ public class Engineer extends Astronaut{
     public void goToRepair(Building building){
         if (super.getPosition() == building.getPostion()){
             repair(building);
-            super.setOccupied(false);
         }
         else{
             moveTo(building.getPostion());
-            super.setOccupied(true);
         }
     }
 

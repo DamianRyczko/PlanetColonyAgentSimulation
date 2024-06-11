@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BuildingPlacer {
+public class BuildingPlacer extends Building {
     private final int daysToCompleteBuilding = 20;
     private int mostNeededResource;
     private boolean currentlyBuilding;
@@ -83,6 +83,8 @@ public class BuildingPlacer {
                 setMostNeededResource(4);
             }
 
+            //System.out.println(smallest);
+
             setTimeToCompletion(getDaysToCompleteBuilding());
 
             int[] coordinates = findClosestResource(startX, startY, mostNeededResource, map);
@@ -105,10 +107,7 @@ public class BuildingPlacer {
         }
 
         setTimeToCompletion(getTimeToCompletion()-numberOfEngineersAtLocation);
-        System.out.println(getTimeToCompletion());
-        if (getTimeToCompletion() == 0){
-            System.out.println("no co nie buduje");
-        }
+        //System.out.println(getTimeToCompletion());
 
         if (getTimeToCompletion() == 0){
             try {

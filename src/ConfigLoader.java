@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ConfigLoader {
+public class ConfigLoader extends BuildingPlacer {
     public static Map<String, Map<String, String>> loadConfig(String filename) throws IOException {
         Map<String, Map<String, String>> config = new HashMap<>();
         Map<String, String> currentSection = null;

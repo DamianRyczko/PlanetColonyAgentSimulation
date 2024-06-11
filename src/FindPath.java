@@ -11,7 +11,7 @@ class Node{
 }
 
 
-public class FindPath {
+public class FindPath extends Astronaut {
 
     private static final int[][] DIRECTIONS = {
             {0, 1}, {1, 0}, {0, -1}, {-1, 0}
