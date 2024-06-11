@@ -29,7 +29,7 @@ public class EventSimulator {
                 break;
             case 2:
                 simulationPanelLeft.appendEventMessage("Event 'Meteor rain'");
-                double chanceOfDamage = 0.2;
+                double chanceOfDamage = 0.7;
                 for (Object building : buildings) {
                     if (building instanceof Farm farm) {
                         if (random.nextDouble() < chanceOfDamage) {
@@ -56,7 +56,7 @@ public class EventSimulator {
                 break;
             case 3:
                 simulationPanelLeft.appendEventMessage("Event 'Famine'");
-                colonyResources.setFood((int) (colonyResources.getFood()*0.85));
+                colonyResources.setFood((int) (colonyResources.getFood()*0.40));
                 break;
         }
     }
