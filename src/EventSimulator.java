@@ -1,7 +1,7 @@
 import java.util.Random;
 import java.util.ArrayList;
 
-public abstract class EventSimulator extends Main implements EventInterface {
+public class EventSimulator {
     private EventInterface randomEvent;
     private Random random;
     private SimulationPanelLeft simulationPanelLeft;
@@ -29,7 +29,7 @@ public abstract class EventSimulator extends Main implements EventInterface {
                 break;
             case 2:
                 simulationPanelLeft.appendEventMessage("Event 'Meteor rain'");
-                double chanceOfDamage = 0.7;
+                double chanceOfDamage = 0.2;
                 for (Object building : buildings) {
                     if (building instanceof Farm farm) {
                         if (random.nextDouble() < chanceOfDamage) {
@@ -56,7 +56,7 @@ public abstract class EventSimulator extends Main implements EventInterface {
                 break;
             case 3:
                 simulationPanelLeft.appendEventMessage("Event 'Famine'");
-                colonyResources.setFood((int) (colonyResources.getFood()*0.40));
+                colonyResources.setFood((int) (colonyResources.getFood()*0.85));
                 break;
         }
     }

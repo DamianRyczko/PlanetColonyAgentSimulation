@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.EmptyBorder;
 
-public class SimulationPanelLeft extends SimulationPanelDisplay {
+public class SimulationPanelLeft extends JPanel {
     private JLabel foodLabel;
     private JLabel waterLabel;
     private JLabel electricityLabel;

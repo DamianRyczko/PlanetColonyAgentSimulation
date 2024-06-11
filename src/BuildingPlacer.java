@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BuildingPlacer extends Building {
+public class BuildingPlacer {
     private final int daysToCompleteBuilding = 20;
     private int mostNeededResource;
     private boolean currentlyBuilding;

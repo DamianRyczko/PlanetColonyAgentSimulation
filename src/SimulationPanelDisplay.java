@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SimulationPanelDisplay extends SimulationFrame {
+public class SimulationPanelDisplay extends JPanel {
     private final AMap map;
     private final Map<Integer, ImageIcon> typeToIcon;
     private final Map<Integer, Color> astronautTypeToColor;

@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class Field extends AMap {
+public class Field {
     private int terrainType;
     private final boolean Rich;
     private boolean empty;

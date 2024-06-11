@@ -2,7 +2,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-abstract class Astronaut extends Main {
+abstract class Astronaut {
     private int id;
     private int health;
     private Position position;

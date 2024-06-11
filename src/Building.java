@@ -1,6 +1,6 @@
 import java.util.Map;
 import java.util.Random;
-abstract class Building extends Main {
+abstract class Building{
     private String producedResource;
     private int producedAmount;
     private int productionTime;

@@ -214,14 +214,4 @@ public class NewDay {
             }
         }
     }
-
-    static boolean isItOver(ArrayList<Astronaut> astronauts){
-        int countOfEngineers = 0;
-        for (Astronaut astronaut : astronauts){
-            if (astronaut instanceof Engineer){
-                countOfEngineers++;
-            }
-        }
-        return countOfEngineers == 0;
-    }
 }

@@ -1,5 +1,5 @@
 import java.util.Random;
-public class EventRandomizer extends Main implements EventInterface {
+public class EventRandomizer implements EventInterface {
     private Random random;
     private int daysSinceLastEvent;
     private double chanceOfRandomEvent; // 0 for 0% and 1 for 100%
@@ -11,7 +11,7 @@ public class EventRandomizer extends Main implements EventInterface {
     }
     @Override
     public int drawEvent(int numberOfEvents) {
-        if(getRandom().nextDouble() < getChanceOfRandomEvent() + (getDaysSinceLastEvent() * 0.07)) {
+        if(getRandom().nextDouble() < getChanceOfRandomEvent() + (getDaysSinceLastEvent() * 0.02)) {
             setDaysSinceLastEvent(0);
             return random.nextInt(numberOfEvents)+1;
         }
