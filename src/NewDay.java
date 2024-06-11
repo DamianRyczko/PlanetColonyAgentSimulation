@@ -12,6 +12,7 @@ public class NewDay {
         ArrayList<Engineer> freeEngineers = assingEngineers(buildings, astronauts);
 
         randomMovs(astronauts, map);
+        eating(astronauts,colonyResources);
 
         return freeEngineers;
     }
@@ -110,7 +111,6 @@ public class NewDay {
         }
         if (minimumDistance == 0){
             theMedic.heal(patient);
-            theMedic.setOccupied(false);
         }
         else if (theMedic == null){return;}
         else{
@@ -119,18 +119,11 @@ public class NewDay {
     }
 
     static ArrayList<Engineer> assingEngineers(ArrayList<Building> buildings, ArrayList<Astronaut> astronauts){
-//        for (Astronaut astronaut : astronauts) {
-//            if (astronaut instanceof Engineer){
-//                if (astronaut.isOccupied()){
-//                    ((Engineer) astronaut).goToRepair();
-//                }
-//            }
-//        }
 
         for (Building building : buildings) {
             if (isBuildingIsDamaged(building)){
                 findEngineerToRepair(building, astronauts);
-                System.out.println("okok");
+                //System.out.println("okok");
             }
         }
 
@@ -162,17 +155,21 @@ public class NewDay {
         int minimumDistance = Integer.MAX_VALUE;
         for (Astronaut astronaut : astronauts) {
             if (astronaut instanceof Engineer){
-                if (!checkIfAvailable(astronaut)){break;}
+                if (astronaut.isMoveMade()){continue;}
+                if (astronaut.getHealth() != 100){continue;}
                 if (minimumDistance > Position.manhattanDistance(astronaut.getPosition(),building.getPostion())){
                     minimumDistance = Position.manhattanDistance(astronaut.getPosition(),building.getPostion());
                     theEngineer = (Engineer) astronaut;
                 }
             }
+            System.out.println("indeks as = "+astronauts.indexOf(astronaut));
         }
-        int t = 9;
         if (theEngineer != null) {
             theEngineer.goToRepair(building);
             //System.out.println("super");
+        }
+        else{
+            System.out.println("nie wiem");
         }
     }
 
@@ -199,6 +196,25 @@ public class NewDay {
                 colonyResources.setElectricity(colonyResources.getElectricity() + amount);
                 building.setResourceWaitingForCollection(0);
                 continue;
+            }
+        }
+    }
+
+    static void eating(ArrayList<Astronaut> astronauts, ColonyResources colonyResources){
+        int dailyFoodConsumption = 1;
+        int dailyOxygenConsumption = 1;
+        for (Astronaut astronaut : astronauts) {
+            if (colonyResources.getFood() < dailyFoodConsumption){
+                astronaut.setHealth(astronaut.getHealth() - 20);
+            }
+            else{
+                colonyResources.setOxygen(colonyResources.getOxygen() - dailyOxygenConsumption);
+            }
+            if (colonyResources.getOxygen() < dailyOxygenConsumption){
+                astronaut.setHealth(astronaut.getHealth() - 20);
+            }
+            else{
+                colonyResources.setOxygen(colonyResources.getOxygen() - dailyOxygenConsumption);
             }
         }
     }

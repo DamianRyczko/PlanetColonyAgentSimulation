@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 public class Main {
 
     public static void main(String[] args) {
-        var colonyResources = new ColonyResources(380, 400, 400, 400);
+        var colonyResources = new ColonyResources(1000, 900, 1000, 1000);
         var eventRandomizer = new EventRandomizer(0.05);
 
 
@@ -28,21 +28,22 @@ public class Main {
         GlobalVariables.GridSizeY = map.getGridSizeY();
         GlobalVariables.GridSize = map.getGridSize();
         ArrayList<Integer> chanceOfTypes = new ArrayList<>();
-        chanceOfTypes.add(95);
-        chanceOfTypes.add(3);
-        chanceOfTypes.add(2);
+        chanceOfTypes.add(80);
+        chanceOfTypes.add(10);
+        chanceOfTypes.add(10);
         map.setMap(chanceOfTypes);
 
         int startX = 24;
         int startY = 24;
         //int numberOfEngineers = 20;
 
-
-
-        astronauts.add(new Medic(new Position(3,5),40, 60, 4,0));
-        astronauts.add(new Medic(new Position(26,12),40, 60, 4,1));
-
         Random rand = new Random();
+
+        for (int i = 0; i < 5;i++){
+            astronauts.add(new Medic(new Position(rand.nextInt(gridX-1), rand.nextInt(gridY-1)),40, 60, 5,i));
+        }
+
+
         for (int i = 0; i < 10;i++){
             astronauts.add(new Engineer(astronauts.size() + i, 100, new Position(rand.nextInt(gridX), rand.nextInt(gridY)),2));
         }
@@ -77,7 +78,7 @@ public class Main {
 
             frame.getSimulationPanelLeft().updateResources(colonyResources);
 
-            eventSimulator.generateEvent(buildings);
+            eventSimulator.generateEvent(buildings,colonyResources);
             frame.repaintMap();
             //adds buildings
             buildingPlacer.addBuildings(buildings, colonyResources, startX, startY, map, freeEngineers);

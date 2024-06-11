@@ -8,7 +8,7 @@ requiredWater=2
 
 [SolarPanel]
 producedResource=electricity
-producedAmount=10
+producedAmount=30
 productionTime=4
 chanceOfMalfunction=0.01
 requiredElectricity=0

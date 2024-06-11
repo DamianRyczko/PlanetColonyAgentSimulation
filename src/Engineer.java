@@ -33,11 +33,9 @@ public class Engineer extends Astronaut{
     public void goToRepair(Building building){
         if (super.getPosition() == building.getPostion()){
             repair(building);
-            super.setOccupied(false);
         }
         else{
             moveTo(building.getPostion());
-            super.setOccupied(true);
         }
     }
 

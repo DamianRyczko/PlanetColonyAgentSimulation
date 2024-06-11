@@ -12,7 +12,7 @@ public class EventSimulator {
         this.simulationPanelLeft = simulationPanelLeft;
     }
 
-    public void generateEvent(ArrayList<Building> buildings) {
+    public void generateEvent(ArrayList<Building> buildings, ColonyResources colonyResources) {
         int event = getRandomEvent().drawEvent(3);
         switch (event) {
             case 0:
@@ -56,11 +56,7 @@ public class EventSimulator {
                 break;
             case 3:
                 simulationPanelLeft.appendEventMessage("Event 'Famine'");
-                for (Object building : buildings) {
-                    if (building instanceof Farm farm) {
-                        farm.setResourceWaitingForCollection(0);
-                    }
-                }
+                colonyResources.setFood((int) (colonyResources.getFood()*7/100));
                 break;
         }
     }

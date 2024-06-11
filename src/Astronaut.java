@@ -108,7 +108,7 @@ abstract class Astronaut {
     public boolean isfree(){
         if (moveMade){return false;}
         if (!alive){return false;}
-        if (health <= 0){return false;}
+        if (health < 100){return false;}
         return true;
     }
 
@@ -121,16 +121,16 @@ abstract class Astronaut {
 
 
 
-    void dailyTask(ArrayList<Building> buildings, ArrayList<Astronaut> astronauts){};
-
-    public void astronautConsumption(int minimumOxygenConsumption, int maximumOxygenConsumption,
-                                     int minimumFoodConsumption, int maximumFoodConsumption,
-                                     int minimumWaterConsumption, int maximumWaterConsumption,
-                                     ColonyResources colonyResources){
-        Random random = new Random();
-        colonyResources.subtractOxygen(minimumOxygenConsumption + random.nextInt(maximumOxygenConsumption - minimumOxygenConsumption));
-        colonyResources.subtractFood(minimumFoodConsumption + random.nextInt(maximumFoodConsumption - minimumFoodConsumption));
-        colonyResources.subtractWater(minimumWaterConsumption + random.nextInt(maximumWaterConsumption - minimumWaterConsumption));
-    }
+//    void dailyTask(ArrayList<Building> buildings, ArrayList<Astronaut> astronauts){};
+//
+//    public void astronautConsumption(int minimumOxygenConsumption, int maximumOxygenConsumption,
+//                                     int minimumFoodConsumption, int maximumFoodConsumption,
+//                                     int minimumWaterConsumption, int maximumWaterConsumption,
+//                                     ColonyResources colonyResources){
+//        Random random = new Random();
+//        colonyResources.subtractOxygen(minimumOxygenConsumption + random.nextInt(maximumOxygenConsumption - minimumOxygenConsumption));
+//        colonyResources.subtractFood(minimumFoodConsumption + random.nextInt(maximumFoodConsumption - minimumFoodConsumption));
+//        colonyResources.subtractWater(minimumWaterConsumption + random.nextInt(maximumWaterConsumption - minimumWaterConsumption));
+//    }
 
 }
