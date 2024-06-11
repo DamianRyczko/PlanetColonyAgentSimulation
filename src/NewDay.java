@@ -162,14 +162,10 @@ public class NewDay {
                     theEngineer = (Engineer) astronaut;
                 }
             }
-            System.out.println("indeks as = "+astronauts.indexOf(astronaut));
         }
         if (theEngineer != null) {
             theEngineer.goToRepair(building);
             //System.out.println("super");
-        }
-        else{
-            System.out.println("nie wiem");
         }
     }
 
@@ -208,7 +204,7 @@ public class NewDay {
                 astronaut.setHealth(astronaut.getHealth() - 20);
             }
             else{
-                colonyResources.setOxygen(colonyResources.getOxygen() - dailyOxygenConsumption);
+                colonyResources.setFood(colonyResources.getFood() - dailyFoodConsumption);
             }
             if (colonyResources.getOxygen() < dailyOxygenConsumption){
                 astronaut.setHealth(astronaut.getHealth() - 20);

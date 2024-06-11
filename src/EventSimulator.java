@@ -56,7 +56,7 @@ public class EventSimulator {
                 break;
             case 3:
                 simulationPanelLeft.appendEventMessage("Event 'Famine'");
-                colonyResources.setFood((int) (colonyResources.getFood()*7/100));
+                colonyResources.setFood((int) (colonyResources.getFood()*0.85));
                 break;
         }
     }

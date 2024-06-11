@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 public class Main {
 
     public static void main(String[] args) {
-        var colonyResources = new ColonyResources(1000, 900, 1000, 1000);
+        var colonyResources = new ColonyResources(4000, 4000-1, 4000, 4000);
         var eventRandomizer = new EventRandomizer(0.05);
 
 
@@ -28,9 +28,9 @@ public class Main {
         GlobalVariables.GridSizeY = map.getGridSizeY();
         GlobalVariables.GridSize = map.getGridSize();
         ArrayList<Integer> chanceOfTypes = new ArrayList<>();
-        chanceOfTypes.add(80);
-        chanceOfTypes.add(10);
-        chanceOfTypes.add(10);
+        chanceOfTypes.add(80); // null
+        chanceOfTypes.add(15); // food
+        chanceOfTypes.add(5); // water
         map.setMap(chanceOfTypes);
 
         int startX = 24;
@@ -39,12 +39,12 @@ public class Main {
 
         Random rand = new Random();
 
-        for (int i = 0; i < 5;i++){
+        for (int i = 0; i < 10;i++){
             astronauts.add(new Medic(new Position(rand.nextInt(gridX-1), rand.nextInt(gridY-1)),40, 60, 5,i));
         }
 
 
-        for (int i = 0; i < 10;i++){
+        for (int i = 0; i < 30;i++){
             astronauts.add(new Engineer(astronauts.size() + i, 100, new Position(rand.nextInt(gridX), rand.nextInt(gridY)),2));
         }
 //        astronauts.add(new Engineer(9, 100, new Position(13, 21),10));

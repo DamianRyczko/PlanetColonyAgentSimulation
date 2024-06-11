@@ -107,7 +107,7 @@ public class BuildingPlacer {
         }
 
         setTimeToCompletion(getTimeToCompletion()-numberOfEngineersAtLocation);
-        System.out.println(getTimeToCompletion());
+        //System.out.println(getTimeToCompletion());
 
         if (getTimeToCompletion() == 0){
             try {
