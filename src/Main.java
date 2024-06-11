@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 
 
 
-public class Main {
+public class Main extends NewDay {
 
     public static void main(String[] args) {
         var colonyResources = new ColonyResources(380, 400, 400, 400);
@@ -88,7 +88,7 @@ public class Main {
 
             frame.getSimulationPanelLeft().updateResources(colonyResources);
 
-            eventSimulator.generateEvent(buildings);
+            eventSimulator.generateEvent(buildings, colonyResources);
             frame.repaintMap();
             //adds buildings
             buildingPlacer.addBuildings(buildings, colonyResources, startX, startY, map, freeEngineers);
