@@ -197,17 +197,17 @@ public class NewDay {
     }
 
     static void eating(ArrayList<Astronaut> astronauts, ColonyResources colonyResources){
-        int dailyFoodConsumption = 1;
-        int dailyOxygenConsumption = 1;
+        int dailyFoodConsumption = 2;
+        int dailyOxygenConsumption = 2;
         for (Astronaut astronaut : astronauts) {
             if (colonyResources.getFood() < dailyFoodConsumption){
-                astronaut.setHealth(astronaut.getHealth() - 20);
+                astronaut.setHealth(astronaut.getHealth() - 340);
             }
             else{
                 colonyResources.setFood(colonyResources.getFood() - dailyFoodConsumption);
             }
             if (colonyResources.getOxygen() < dailyOxygenConsumption){
-                astronaut.setHealth(astronaut.getHealth() - 20);
+                astronaut.setHealth(astronaut.getHealth() - 34);
             }
             else{
                 colonyResources.setOxygen(colonyResources.getOxygen() - dailyOxygenConsumption);
